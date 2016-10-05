@@ -1,0 +1,15 @@
+package edu.iastate.cs228.hw1;
+
+import static org.junit.Assert.*;
+import org.junit.*;
+
+public class EmptyTest {
+
+	@Test
+	public void whoShouldbeEmpty() {
+		World w = new World(3);
+		Empty e = new Empty(w, 0, 0);
+		assertEquals("Who should return proper type", State.EMPTY, e.who());
+	}
+	
+}

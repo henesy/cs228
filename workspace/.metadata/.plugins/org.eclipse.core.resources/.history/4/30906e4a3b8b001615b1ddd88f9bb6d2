@@ -1,0 +1,119 @@
+package edu.iastate.cs228.hw2;
+
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+
+public class PolarAngleComparatorTest {
+
+    @Test
+    public void compareDistanceTest1()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(2, 2);
+        assertEquals(-1, p.compareDistance(p1, p2));
+    }
+
+    @Test
+    public void compareDistanceTest2()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(1, 1);
+        assertEquals(0, p.compareDistance(p1, p2));
+    }
+
+    @Test
+    public void compareDistanceTest3()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(2, 2);
+        Point p2 = new Point(1, 1);
+        assertEquals(1, p.compareDistance(p1, p2));
+    }
+
+    @Test
+    public void comparePolarAngle1()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(2, 0);
+        Point p2 = new Point(2, 2);
+        assertEquals(-1, p.comparePolarAngle(p1, p2));
+    }
+
+    @Test
+    public void comparePolarAngle2()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(2, 2);
+        assertEquals(0, p.comparePolarAngle(p1, p2));
+    }
+
+    @Test
+    public void comparePolarAngle3()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(2, 2);
+        Point p2 = new Point(2, 0);
+        assertEquals(1, p.comparePolarAngle(p1, p2));
+    }
+
+    @Test
+    public void compareTest1()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(2, 2);
+        Point p2 = new Point(2, 2);
+        assertEquals(0, p.compare(p1, p2));
+    }
+
+    @Test
+    public void compareTest2()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point();
+        Point p2 = new Point(2, 2);
+        assertEquals(-1, p.compare(p1, p2));
+    }
+
+    @Test
+    public void compareTest3()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(2, 1);
+        Point p2 = new Point(2, 2);
+        assertEquals(-1, p.compare(p1, p2));
+    }
+
+    @Test
+    public void compareTest4()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(2, 2);
+        assertEquals(-1, p.compare(p1, p2));
+    }
+
+    @Test
+    public void compareTest5()
+    {
+        Point r = new Point();
+        PolarAngleComparator p = new PolarAngleComparator(r);
+        Point p1 = new Point(2, 4);
+        Point p2 = new Point(2, 2);
+        assertEquals(1, p.compare(p1, p2));
+    }
+}

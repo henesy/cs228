@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="C:\Program Files\Java\jre1.8.0_74" version="1.8.0_74">
+<bootpath>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\resources.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\rt.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\sunrsasign.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\jsse.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\jce.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\charsets.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\jfr.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_74\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\ext"/>
+<entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\Program Files\Java\jre1.8.0_74\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+<libraryInfo home="C:\Program Files\Java\jre1.8.0_102" version="1.8.0_102">
+<bootpath>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\resources.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\rt.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\sunrsasign.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\jsse.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\jce.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\charsets.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\jfr.jar"/>
+<entry path="C:\Program Files\Java\jre1.8.0_102\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\ext"/>
+<entry path="C:\Windows\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\Program Files\Java\jre1.8.0_102\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+<libraryInfo home="/usr/lib/jvm/java-8-openjdk-amd64/jre" version="1.8.0_91">
+<bootpath>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext"/>
+<entry path="/usr/java/packages/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+<libraryInfo home="/usr/lib/jvm/java-8-openjdk-amd64" version="1.8.0_91">
+<bootpath>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/sunrsasign.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jfr.jar"/>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext"/>
+<entry path="/usr/java/packages/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

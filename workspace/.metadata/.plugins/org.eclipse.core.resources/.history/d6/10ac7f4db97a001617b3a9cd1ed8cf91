@@ -1,0 +1,9 @@
+package edu.iastate.cs228.hw1;
+
+import org.junit.Test;
+
+public class EmptyTest {
+
+	@Test
+	
+}

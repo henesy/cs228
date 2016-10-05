@@ -1,0 +1,11 @@
+//org.eclipse.ui.commands/state/org.eclipse.papyrus.infra.nattable.column.index.style/org.eclipse.ui.commands.radioState=Alphabetic
+//org.eclipse.ui.commands/state/org.eclipse.papyrus.infra.nattable.row.index.style/org.eclipse.ui.commands.radioState=Alphabetic
+//org.eclipse.ui.commands/state/org.eclipse.papyrus.infra.nattable.table.hierarchic.style/org.eclipse.ui.commands.radioState=HIERARCHIC_MULTI_TREE_COLUMN
+//org.eclipse.ui.commands/state/org.eclipse.ui.navigator.resources.nested.changeProjectPresentation/org.eclipse.ui.commands.radioState=false
+//org.eclipse.ui.commands/state/org.eclipse.wst.xml.views.XPathView.processor.xpathprocessor/org.eclipse.ui.commands.radioState=xpath10
+ColorsAndFontsPreferencePage.expandedCategories=Torg.eclipse.jdt.ui.presentation
+ColorsAndFontsPreferencePage.selectedElement=Forg.eclipse.jdt.ui.editors.textfont
+PLUGINS_NOT_ACTIVATED_ON_STARTUP=org.eclipse.m2e.discovery;
+eclipse.preferences.version=1
+org.eclipse.jdt.internal.ui.compare.JavaMergeViewer=1|Monospace|9.0|0|GTK|1|;
+org.eclipse.jdt.ui.editors.textfont=1|Monospace|9.0|0|GTK|1|;
