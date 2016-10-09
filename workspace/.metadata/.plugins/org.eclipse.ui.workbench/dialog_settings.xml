@@ -30,6 +30,7 @@
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
 		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="U:\cs228\hw3 files\228 F16 Projects"/>
 			<item value="/home/henesy/Downloads"/>
 			<item value="C:\Users\seh\Downloads"/>
 			<item value="/home/henesy/Documents/cs228"/>
