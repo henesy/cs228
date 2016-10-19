@@ -1,7 +1,9 @@
 package edu.iastate.cs228.hw3;
 
+import java.io.File;
 import java.io.FileNotFoundException; 
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -21,6 +23,10 @@ public class DoublySortedList
 	 private int size;     			// number of different kinds of fruits	 
 	 private Node headN; 			// dummy node as the head of the sorted linked list by fruit name 
 	 private Node headB; 			// dummy node as the head of the sorted linked list by bin number
+	 
+	 // added
+	 private int maxFruit = 36; //36 common fruits
+	 private int highBin;
 
 	 /**
 	  *  Default constructor constructs an empty list. Initialize size. Set the fields nextN and 
@@ -30,6 +36,17 @@ public class DoublySortedList
 	 public DoublySortedList()
 	 {
 		 //	TODO
+		 size = 0;
+		 
+		 Node h = new Node();
+		 headN = h;
+		 headB = h;
+		 
+		 headN.nextN = headN;
+		 headN.previousN = headN;
+		 headB.nextB = headB;
+		 headB.previousB = headB;
+		 highBin = 1;
 	 }
 	 
 	 
@@ -52,7 +69,62 @@ public class DoublySortedList
 	  */
 	 public DoublySortedList(String inventoryFile) throws FileNotFoundException
 	 {
-		 // TODO 
+		 // TODO
+		 /* init list */
+		 size = 0;
+		 
+		 Node h = new Node();
+		 headN = h;
+		 headB = h;
+		 
+		 headN.nextN = headN;
+		 headN.previousN = headN;
+		 headB.nextB = headB;
+		 headB.previousB = headB;
+		 
+		 highBin = 1;
+		 
+		 /* load the file */
+		 Node previousB = new Node();
+		 Node previousN = new Node();
+		 boolean first = true;
+		 File file = new File(inventoryFile);
+		Scanner s = new Scanner(file);
+		while(s.hasNextLine()) {
+			String line = s.nextLine();
+			Scanner l = new Scanner(line);
+			//System.out.println(line);
+			String type = l.next();
+			int quantity = l.nextInt();
+			int bin = l.nextInt();
+			
+			//init & add Node
+			if(first) {
+				Node n = new Node(type, quantity, bin, headN, headN, headB, headB);
+				n.previousB.nextB = n;
+				n.previousN.nextN = n;
+				previousB = n;
+				previousN = n;
+				first = false;
+			} else {
+				Node n = new Node(type, quantity, bin, headN, previousN, headB, previousB);
+				n.previousB.nextB = n;
+				n.previousN.nextN = n;
+				previousB = n;
+				previousN = n;
+			}
+			
+			if(bin > highBin)
+				highBin = bin;
+			
+			size++;
+			l.close();
+		}
+		s.close();
+		 
+		 /* insertion sort the lists */
+		 //generate comparator objects
+		 
 	 }
 	 
 	 
@@ -97,6 +169,24 @@ public class DoublySortedList
 	 public void add(String fruit, int n) throws IllegalArgumentException
 	 {
 		 // TODO 
+		 if(n < 0)
+			 throw new IllegalArgumentException();
+		 
+		 //search for fruit
+		Node res = findFruit(fruit);
+		if(res != null) {
+			res.quantity += n;
+		} else {
+		 
+			 //create a new node to store the fruit at the first available bin
+			 Node nNode = new Node(fruit, n, highBin, headN, headN.previousN, headB, headB.previousB);
+			 headB.previousB.nextB = nNode;
+			 headN.previousN.nextN = nNode;
+			 headB.previousB = nNode;
+			 headB.previousN = nNode;
+			 highBin++;
+			 size++;
+		}
 	 }
 	 
 	 
@@ -118,6 +208,50 @@ public class DoublySortedList
 	 public void restock(String fruitFile) throws FileNotFoundException, IllegalArgumentException
 	 {
 		 // TODO
+		 //read the file
+		 String[] fruitsMax = new String[maxFruit];
+		 int[] quantsMax = new int[maxFruit];
+		 
+		File file = new File(fruitFile);
+		Scanner s = new Scanner(file);
+		int i = 0, j = 0;
+		while(s.hasNextLine()) {
+			String line = s.nextLine();
+			Scanner l = new Scanner(line);
+			//System.out.println(line);
+			String fruit = l.next();
+			int quantity = l.nextInt();
+			
+			if(quantity < 0) {
+				l.close();
+				s.close();
+				throw new IllegalArgumentException();
+			}
+			
+			fruitsMax[i] = fruit;
+			quantsMax[j] = quantity;
+			i++;
+			j++;
+			
+			l.close();
+		}
+		s.close();
+		int len = i+1;
+		
+		String[] fruits = new String[len];
+		 int[] quants = new int[len];
+		 
+		 for(i = 0; i < len; i++) {
+			 fruits[i] = fruitsMax[i];
+			 quants[i] = quantsMax[i];
+		 }
+		 
+		 //sort the 2 arrays with Quicksort
+		 
+		 
+		 //restock the fruits
+		
+		 
 	 }
 
 	 
@@ -134,6 +268,11 @@ public class DoublySortedList
 	 public void remove(String fruit)
 	 {
 		 // TODO
+		 Node res = findFruit(fruit);
+		 if(res == null)
+			 return;
+		 
+		 remove(res);
 	 }
 	 
 	 
@@ -151,6 +290,15 @@ public class DoublySortedList
 	 public void remove(int bin) throws IllegalArgumentException
 	 {
 		 // TODO 
+		 if(bin < 1)
+			 throw new IllegalArgumentException();
+		 
+		 Node res = findBin(bin);
+		 if(res == null)
+			 return;
+		 
+		 remove(res);
+		 
 	 }
 	 
 	 
@@ -170,6 +318,11 @@ public class DoublySortedList
 	 public void sell(String fruit, int n) throws IllegalArgumentException 
 	 {
 		 // TODO
+		 Node res = findFruit(fruit);
+		 if(n >= res.quantity)
+			 remove(res);
+		 else
+			 res.quantity -= n;
 	 }
 	 
 	 
@@ -201,8 +354,8 @@ public class DoublySortedList
      public int inquire(String fruit)
      {
     	 // TODO 
-    	 
-    	 return 0;   	 
+    	 Node res = findFruit(fruit);
+    	 return res.quantity;   	 
       }
      
 	 
@@ -221,8 +374,17 @@ public class DoublySortedList
 	 public String printInventoryN()
 	 {	 
 		 // TODO 
+		 String str = String.format("%-16s%-16s%-16s\n", "fruit", "quantity", "bin");
+		 str += "----------------------------------\n";
 		 
-		 return null; 
+		 Node cursor = headN;
+		 int i;
+		 for(i = 0; i < size; i++) {
+			 str += String.format("%-16s%-16s%-16s\n", cursor.nextN.fruit, cursor.nextN.quantity, cursor.nextN.bin);
+			 cursor = cursor.nextN;
+		 }
+		 
+		 return str; 
 	 }
 	 
 	 /**
@@ -240,8 +402,17 @@ public class DoublySortedList
 	 public String printInventoryB()
 	 {
 		 // TODO 
+		 String str = String.format("%-16s%-16s%-16s\n", "fruit", "quantity", "bin");
+		 str += "----------------------------------\n";
 		 
-		 return null; 
+		 Node cursor = headB;
+		 int i;
+		 for(i = 0; i < size; i++) {
+			 str += String.format("%-16s%-16s%-16s\n", cursor.nextB.fruit, cursor.nextB.quantity, cursor.nextB.bin);
+			 cursor = cursor.nextB;
+		 }
+		 
+		 return str; 
 	 }
 	 
 	 
@@ -254,7 +425,7 @@ public class DoublySortedList
 	 {
 		 // TODO 
 		 
-		 return null; 
+		 return printInventoryN(); 
 	 }
 	 
 	 
@@ -266,6 +437,15 @@ public class DoublySortedList
 	 public void compactStorage()
 	 {
 		 // TODO 
+		//sort by bin? this function is poorly defined or explained
+		 Node cursor = headB.nextB;
+		 int i, hBin = 1;
+		 for(i = 0; i < size; i++) {
+			 cursor.bin = i+1;
+			 hBin = cursor.bin;
+			 cursor = cursor.nextB;
+		 }
+		 highBin = hBin;
 	 }
 	 
 	 
@@ -275,6 +455,11 @@ public class DoublySortedList
 	 public void clearStorage()
 	 {
 		 // TODO 
+		 headN.nextN = headN;
+		 headN.previousN = headN;
+		 headB.nextB = headB;
+		 headB.previousB = headB;
+		 size = 0;
 	 }
 	 
 	 
@@ -313,6 +498,25 @@ public class DoublySortedList
 	 public void insertionSort(boolean sortNList, Comparator<Node> comp)
 	 {
 		 // TODO 
+		 
+		//start at 1 which is 2nd element as per {H, 0, 1, ...}
+		/** this is all very very broken **/
+		Node cursor = headN.nextN.nextN;
+		int i;
+		for(i = 1; i < size; i++) {
+			Node tmp = cursor;
+			int h = i;
+			
+			Node cursorH = cursor;
+			while(h > 0 && comp.compare(tmp.previousN, tmp) > 0) {
+				cursorH = cursorH.previousN;
+				h--;
+			}
+			if(comp.compare(cursorH, cursor) != 0) {
+				//same as above ;; this is incorrect
+				cursorH = tmp;
+			}
+		}
 	 }
 	 
 
@@ -346,6 +550,10 @@ public class DoublySortedList
 	 private void insertN(Node node, Node prev, Node next)
 	 {
 		 // TODO 
+		 prev.nextN = node;
+		 next.previousN = node;
+		 node.nextN = next;
+		 node.previousN = prev;
 	 }
 	
 	 
@@ -359,6 +567,10 @@ public class DoublySortedList
 	 private void insertB(Node node, Node prev, Node next)
 	 {	 
 		 // TODO 
+		 prev.nextB = node;
+		 next.previousB = node;
+		 node.nextB = next;
+		 node.previousB = prev;
 	 }
 	 
 	 
@@ -370,6 +582,13 @@ public class DoublySortedList
 	 private void remove(Node node)
 	 {
 		 // TODO 
+		 Node resN = findFruit(node.fruit);
+		 Node resB = findBin(node.bin);
+		 resN.previousN.nextN = resN.nextN;
+		 resB.previousB.nextB = resB.nextB;
+		 resN.nextN.previousN = resN.previousN;
+		 resB.nextB.previousB = resB.previousB;
+		 size--;
 	 }
 	  
 	 
@@ -395,5 +614,49 @@ public class DoublySortedList
 		 
 		 return 0; 
 	 }
-	  
+	 
+	 //added
+	 /**
+	  *  Searches for a matching node by criteria
+	  * @param fruit name of fruit to find
+	  * @return the node that matches fruit ;; null if none found
+	  */
+	 private Node findFruit(String fruit) {
+		 Node cursor = headN.nextN;
+		 int i;
+		 for(i = 0; i < size; i++) {
+			 if(cursor.fruit.equals(fruit)) {
+				 return cursor;
+		 	}
+			cursor = cursor.nextN;
+		 }
+		 return null;
+	 }
+	 
+	 /**
+	  *  Searches for a matching node by criteria
+	  * @param bin number to find
+	  * @return the node that matches bin ;; null if none found
+	  */
+	 private Node findBin(int bin) {
+		 Node cursor = headB.nextB;
+		 int i;
+		 for(i = 0; i < size; i++) {
+			 if(cursor.bin == bin) {
+				 return cursor;
+		 	}
+			cursor = cursor.nextB;
+		 }
+		 return null;
+	 }
+	 
+	 /**
+	  * Swaps two nodes within a given list specified by listN
+	  * @param a first node to swap
+	  * @param b second node to swap
+	  * @param listN if true swaps within the N list, otherwise, swaps within the B list
+	  */
+	 private void swap(Node a, Node b, boolean listN) {
+		 
+	 }
 }

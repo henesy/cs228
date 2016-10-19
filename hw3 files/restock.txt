@@ -1,0 +1,4 @@
+pear	40
+apple	50
+grape	100
+banana	20

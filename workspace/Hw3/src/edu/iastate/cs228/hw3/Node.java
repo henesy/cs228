@@ -55,6 +55,6 @@ public class Node
     {
     	// TODO 
     	
-        return null; 
+        return fruit + "\t" + quantity + "\t" + bin + "\n"; 
     }
 }

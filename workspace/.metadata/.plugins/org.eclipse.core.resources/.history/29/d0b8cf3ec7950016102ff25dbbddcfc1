@@ -1,0 +1,31 @@
+package edu.iastate.cs228.hw3;
+
+/**
+ * 
+ * @author Sean Hinchee
+ *
+ */
+
+public class DSLTest 
+{
+	public static void main(String args[])
+	{
+		// Conduct your own JUnit tests in a class, say, HW3Test.
+		DoublySortedList dsl = new DoublySortedList();
+		System.out.println(dsl.toString());
+		dsl.add("apple", 5);
+		System.out.println(dsl.toString());
+		dsl.add("pear", 3);
+		System.out.println(dsl.toString());
+		dsl.remove("apple");
+		System.out.println(dsl.toString());
+		dsl.compactStorage();
+		System.out.println(dsl.toString());
+		dsl.remove(1);
+		System.out.println(dsl.toString());
+		dsl.add("potato", 2);
+		dsl.add("ryberry", 7);
+		System.out.println(dsl.toString());
+		System.out.println(dsl.inquire("ryberry"));
+	}
+}
