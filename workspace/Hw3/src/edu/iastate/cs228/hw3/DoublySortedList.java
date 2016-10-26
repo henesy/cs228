@@ -179,6 +179,7 @@ public class DoublySortedList
 		} else {
 		 
 			 //create a new node to store the fruit at the first available bin
+			//fruit, quant, bin, nextN prevN nextB prevB
 			 Node nNode = new Node(fruit, n, highBin, headN, headN.previousN, headB, headB.previousB);
 			 headB.previousB.nextB = nNode;
 			 headN.previousN.nextN = nNode;
@@ -343,6 +344,8 @@ public class DoublySortedList
 	 public void bulkSell(String fruitFile) throws FileNotFoundException, IllegalArgumentException
 	 {
 		 // TODO 
+		 //quicksort
+		 
 	 }
 	 
 	 
@@ -498,25 +501,47 @@ public class DoublySortedList
 	 public void insertionSort(boolean sortNList, Comparator<Node> comp)
 	 {
 		 // TODO 
-		 
-		//start at 1 which is 2nd element as per {H, 0, 1, ...}
-		/** this is all very very broken **/
-		Node cursor = headN.nextN.nextN;
-		int i;
-		for(i = 1; i < size; i++) {
-			Node tmp = cursor;
-			int h = i;
-			
-			Node cursorH = cursor;
-			while(h > 0 && comp.compare(tmp.previousN, tmp) > 0) {
-				cursorH = cursorH.previousN;
-				h--;
-			}
-			if(comp.compare(cursorH, cursor) != 0) {
-				//same as above ;; this is incorrect
-				cursorH = tmp;
-			}
-		}
+		 if(sortNList) {
+			 //N
+			 
+			 Node cursorI = headN.nextN.nextN;
+			 Node cursorH = new Node();
+			 Node nextI = new Node();
+			 
+			 int i;
+			 for(i = 1; i < size; i++) {
+				// Point tmp = points[i];
+				 int h = i;
+				cursorH = cursorI;
+				nextI = cursorI.nextN;
+				 
+				//System.out.println("i: " + i);
+				 while(h > 0 && comp.compare(cursorH.previousN, cursorI)  > 0) {
+					 //points[h] = points[h-1];					 
+					//System.out.println("h: " + h );
+					cursorH = cursorH.previousN;
+					 h--;
+				 }
+				 if(h != i) {
+					 //points[h] = tmp;
+					 
+					 //cursorH = cursorH.nextN;
+					 
+					 //remove I
+					 cursorI.previousN.nextN = cursorI.nextN;
+					 cursorI.nextN.previousN = cursorI.previousN;
+					
+					 //insert I where it belongs before H
+					 insertN(cursorI, cursorH.previousN, cursorH);					 
+				 }
+				// cursorI = cursorI.nextN;
+				 cursorI  = nextI;
+			 }
+			// System.out.println(headN.previousN.fruit);
+		 } else {
+			 //B
+			 
+		 }
 	 }
 	 
 
@@ -657,6 +682,44 @@ public class DoublySortedList
 	  * @param listN if true swaps within the N list, otherwise, swaps within the B list
 	  */
 	 private void swap(Node a, Node b, boolean listN) {
-		 
+		 if(listN) {
+			 //N
+			 Node tmp = new Node();
+			 tmp.nextN = b.nextN;
+			 tmp.previousN = b.previousN;
+			 b.nextN = a.nextN;
+			 b.previousN = a.previousN;
+			 a.nextN = tmp.nextN;
+			 a.previousN = tmp.previousN;
+			 
+			 b.previousN.nextN = b;
+			 b.nextN.previousN = b;
+			 a.previousN.nextN = a;
+			 a.nextN.previousN = a;
+		 } else {
+			 //B
+			 Node tmp = new Node();
+			 tmp.nextB = b.nextB;
+			 tmp.previousB = b.previousB;
+			 b.nextB = a.nextB;
+			 b.previousB = a.previousB;
+			 a.nextB = tmp.nextB;
+			 a.previousB = tmp.previousB;
+			 
+			 b.previousB.nextB = b;
+			 b.nextB.previousB = b;
+			 a.previousB.nextB = a;
+			 a.nextB.previousB = a;
+		 }
 	 }
+	 
+		/***
+		 * 
+		 * @param to
+		 * @param from
+		 * @param listN true -> N list ;; false -> B list
+		 */
+		private void copyNode(Node to, Node from, boolean listN) {
+			
+		}
 }
