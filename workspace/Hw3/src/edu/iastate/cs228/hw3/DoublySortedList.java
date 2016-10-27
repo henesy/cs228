@@ -1,6 +1,6 @@
 package edu.iastate.cs228.hw3;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileNotFoundException; 
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -237,21 +237,75 @@ public class DoublySortedList
 			l.close();
 		}
 		s.close();
-		int len = i+1;
+		int len = i; // was i+1
 		
 		String[] fruits = new String[len];
-		 int[] quants = new int[len];
+		 Integer[] quants = new Integer[len];
 		 
 		 for(i = 0; i < len; i++) {
 			 fruits[i] = fruitsMax[i];
 			 quants[i] = quantsMax[i];
 		 }
 		 
+		 
 		 //sort the 2 arrays with Quicksort
+		 quickSort(fruits, quants, len);
 		 
 		 
 		 //restock the fruits
-		
+		 /****
+		  * Broken as shit
+		  */
+		 if(size > 0) {
+			//walk the lists
+			Node cursorN = headN.nextN;
+			Node cursorB = headB.nextB;
+			for(i = 0; i < size; i++, cursorN = cursorN.nextN, cursorB = cursorB.nextB) {
+				if(cursorN.fruit.compareTo(fruits[i]) >= 0) {
+					if(cursorN.fruit.compareTo(fruits[i]) == 0) {
+						//same fruit
+						cursorN.quantity += quants[i];
+					} else {
+						//new type
+						Node M = new Node();
+						M.fruit = fruits[i];
+						M.quantity = quants[i];
+						//add to N list
+						insertN(M, cursorN.previousN, cursorN);
+						//add to B list
+						int bin = 0;
+						Node cur = headB.nextB;
+						if(cur.bin > 1)
+							bin = 1;
+
+						for(i = 1; i < size; i++) {
+							cur = cur.nextB;
+							if(cur.bin - cur.previousB.bin > 1)
+								bin = cur.previousB.bin+1;
+						}
+						if(bin == 0) {
+							//nextB is headB and we found no result already
+							bin = highBin;
+							highBin++;
+							M.bin = bin;
+							//will be the last element
+							insertB(M, headB.previousB.previousB, headB);
+						} else {
+							M.bin = bin;
+							insertB(M, cur.previousB, cur);
+						}
+						
+					}
+				}
+					
+			}
+		 } else {
+			 //add all new bins
+			 for(i = 0; i < size; i++) {
+				 add(fruits[i], quants[i]);
+			 }
+		 }
+		 
 		 
 	 }
 
@@ -345,6 +399,7 @@ public class DoublySortedList
 	 {
 		 // TODO 
 		 //quicksort
+		 
 		 
 	 }
 	 
@@ -484,8 +539,44 @@ public class DoublySortedList
 	 public Pair<DoublySortedList> split()
 	 {
 		 // TODO 
+		 DoublySortedList a = new DoublySortedList();
+		 DoublySortedList b = new DoublySortedList();
 		 
-		 return null; 
+		 int median = size/2;
+		 //7/2 = 3 (split of 3 | 4)
+		 //up to and including the median
+		 Node M = new Node();
+		 
+		 //populate N lists
+		 int i;
+		 Node cursor = headN.nextN;
+		 for(i = 0; i < size; i++, cursor = cursor.nextN) {
+			 if(i <= median) {
+			 	//a.add(cursor.fruit, cursor.quantity);
+				 addN(a, cursor);
+			 } else {
+				//b.add(cursor.fruit, cursor.quantity);
+				 addN(b, cursor);
+			 }
+			 if(i == median)
+				 M = cursor;
+		 }
+		 insertionSort(a);
+		 insertionSort(b);
+		 
+		 cursor = headB.nextB;
+		 for(i = 0; i < size; i++, cursor = cursor.nextB) {
+			 if(cursor.fruit.compareTo(M.fruit) <= 0) {
+				 //add to a
+				 addB(b, cursor);
+			 } else {
+				 //add to b
+				 addB(b, cursor);
+			 }
+		 }
+		 
+		 
+		 return new Pair<DoublySortedList>(a, b); 
 	 }
 	 
 	 
@@ -541,12 +632,47 @@ public class DoublySortedList
 		 } else {
 			 //B
 			 
+			 Node cursorI = headB.nextB.nextB;
+			 Node cursorH = new Node();
+			 Node nextI = new Node();
+			 
+			 int i;
+			 for(i = 1; i < size; i++) {
+				// Point tmp = points[i];
+				 int h = i;
+				cursorH = cursorI;
+				nextI = cursorI.nextB;
+				 
+				//System.out.println("i: " + i);
+				 while(h > 0 && comp.compare(cursorH.previousB, cursorI)  > 0) {
+					 //points[h] = points[h-1];					 
+					//System.out.println("h: " + h );
+					cursorH = cursorH.previousB;
+					 h--;
+				 }
+				 if(h != i) {
+					 //points[h] = tmp;
+					 
+					 //cursorH = cursorH.nextB;
+					 
+					 //remove I
+					 cursorI.previousB.nextB = cursorI.nextB;
+					 cursorI.nextB.previousB = cursorI.previousB;
+					
+					 //insert I where it belongs before H
+					 insertB(cursorI, cursorH.previousB, cursorH);					 
+				 }
+				// cursorI = cursorI.nextB;
+				 cursorI  = nextI;
+			 }
+			// System.out.println(headB.previousB.fruit);
+			 
 		 }
 	 }
 	 
 
 	 /**
-	  * Sort an array of fruit names using quicksort.  After sorting, quant[i] is the 
+	  * Sort an array of fruit names using sort.  After sorting, quant[i] is the 
 	  * quantity of the fruit with name[i].  
 	  * 
 	  * Made a public method for testing by TA. 
@@ -558,12 +684,20 @@ public class DoublySortedList
 	 public void quickSort(String fruit[], Integer quant[], int size)
 	 {
 		 // TODO 
+		 quickSortRec(fruit, quant, 0, size-1);
 	 }
 	 
 	 
 	 // --------------
 	 // helper methods 
 	 // --------------
+	 
+	 private void quickSortRec(String fruit[], Integer quant[], int first, int last) {
+		if(first >= last) return;
+		int p = partition(fruit, quant, first, last);
+		quickSortRec(fruit, quant, first, p - 1);
+		quickSortRec(fruit, quant, p + 1, last);
+	 }
 	 
 	 /**
 	  * Add a node between two nodes prev and next in the N-list.   
@@ -619,14 +753,6 @@ public class DoublySortedList
 	 
 	 /**
 	  * 
-	  * @param name		name[first, last] is the subarray of fruit names 
-	  * @param bin		bin[first, last] is the subarray of bins storing the fruits.
-	  * @param first
-	  * @param last
-	  */
-	 
-	 /**
-	  * 
 	  * @param fruit    array of fruit names 
 	  * @param quant	array of fruit quantities corresponding to fruit[]
 	  * @param first
@@ -636,8 +762,28 @@ public class DoublySortedList
 	 private int partition(String fruit[], Integer quant[], int first, int last)
 	 {
 		 // TODO 
-		 
-		 return 0; 
+		 	int pivot = last;
+			int i = first - 1;
+			
+			int j;
+			for(j = first; j < last; j++) {
+				if(fruit[j].compareTo(fruit[pivot]) <= 0) {
+					i++;
+					swap(i, j, fruit, quant);
+				}
+				
+			}
+			swap(i+1, last, fruit, quant);
+			
+			return i + 1;
+	 }
+	 private void swap(int a, int b, String fruit[], Integer quant[]) {
+		 String tf = fruit[a];
+		 int tq = quant[a];
+		 fruit[a] = fruit[b];
+		 quant[a] = quant[b];
+		 fruit[b] = tf;
+		 quant[b] = tq;
 	 }
 	 
 	 //added
@@ -712,6 +858,72 @@ public class DoublySortedList
 			 a.nextB.previousB = a;
 		 }
 	 }
+	 
+	 /***
+	  * insertion sorts a dsl's n list
+	  * @param dsl input list
+	  */
+	 private void insertionSort(DoublySortedList dsl) {
+		Node dslHeadN = dsl.headN;
+		NameComparator comp = new NameComparator();
+		
+		 //N
+		 
+		 Node cursorI = dslHeadN.nextN.nextN;
+		 Node cursorH = new Node();
+		 Node nextI = new Node();
+		 
+		 int i;
+		 for(i = 1; i < size; i++) {
+			// Point tmp = points[i];
+			 int h = i;
+			cursorH = cursorI;
+			nextI = cursorI.nextN;
+			 
+			//System.out.println("i: " + i);
+			 while(h > 0 && comp.compare(cursorH.previousN, cursorI)  > 0) {
+				 //points[h] = points[h-1];					 
+				//System.out.println("h: " + h );
+				cursorH = cursorH.previousN;
+				 h--;
+			 }
+			 if(h != i) {
+				 //points[h] = tmp;
+				 
+				 //cursorH = cursorH.nextN;
+				 
+				 //remove I
+				 cursorI.previousN.nextN = cursorI.nextN;
+				 cursorI.nextN.previousN = cursorI.previousN;
+				
+				 //insert I where it belongs before H
+				 insertN(cursorI, cursorH.previousN, cursorH);					 
+			 }
+			// cursorI = cursorI.nextN;
+			 cursorI  = nextI;
+		 }
+		// System.out.println(dslHeadN.previousN.fruit);
+	 }
+	 
+	 
+	 /***
+	  * adds a node to the n list of a dsl
+	  * @param dsl
+	  * @param n
+	  */
+	 private void addN(DoublySortedList dsl, Node n) {
+		 
+	 }
+	 
+	 /***
+	  * adds a node to the b list of a dsl
+	  * @param dsl
+	  * @param n
+	  */
+	 private void addB(DoublySortedList dsl, Node n) {
+		 
+	 }
+	 
 	 
 		/***
 		 * 
