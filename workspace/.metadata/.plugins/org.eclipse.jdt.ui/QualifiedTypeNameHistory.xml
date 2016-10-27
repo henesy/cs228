@@ -9,4 +9,6 @@
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw3.DoublySortedList"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw3.BinComparator"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw3.NameComparator"/>
 </qualifiedTypeNameHistroy>

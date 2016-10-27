@@ -1,9 +1,8 @@
 package edu.iastate.cs228.hw3;
 
-import java.io.File; 
+import java.io.File;  
 import java.io.FileNotFoundException; 
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -124,7 +123,8 @@ public class DoublySortedList
 		 
 		 /* insertion sort the lists */
 		 //generate comparator objects
-		 
+		 insertionSort(true, new NameComparator());
+		 insertionSort(false, new BinComparator());
 	 }
 	 
 	 
@@ -256,55 +256,113 @@ public class DoublySortedList
 		 /****
 		  * Broken as shit
 		  */
+		 
+		 /****
 		 if(size > 0) {
 			//walk the lists
-			Node cursorN = headN.nextN;
-			Node cursorB = headB.nextB;
-			for(i = 0; i < size; i++, cursorN = cursorN.nextN, cursorB = cursorB.nextB) {
-				if(cursorN.fruit.compareTo(fruits[i]) >= 0) {
-					if(cursorN.fruit.compareTo(fruits[i]) == 0) {
-						//same fruit
-						cursorN.quantity += quants[i];
-					} else {
-						//new type
-						Node M = new Node();
-						M.fruit = fruits[i];
-						M.quantity = quants[i];
-						//add to N list
-						insertN(M, cursorN.previousN, cursorN);
-						//add to B list
-						int bin = 0;
-						Node cur = headB.nextB;
-						if(cur.bin > 1)
-							bin = 1;
+			Node cN = headN.nextN;
+			Node cB = headB.nextB;
+			int h;
 
-						for(i = 1; i < size; i++) {
-							cur = cur.nextB;
-							if(cur.bin - cur.previousB.bin > 1)
-								bin = cur.previousB.bin+1;
-						}
-						if(bin == 0) {
-							//nextB is headB and we found no result already
-							bin = highBin;
-							highBin++;
-							M.bin = bin;
-							//will be the last element
-							insertB(M, headB.previousB.previousB, headB);
+			for(h = 0; h < size; h++, cN = cN.nextN, cB = cB.nextB) {
+				Node cursorN = cN;
+				Node cursorB = cB;
+				for(i = h; i < size; i++, cursorN = cursorN.nextN, cursorB = cursorB.nextB) {
+					if(cursorN.fruit.compareTo(fruits[i]) >= 0) {
+						if(cursorN.fruit.compareTo(fruits[i]) == 0) {
+							//same fruit
+							cursorN.quantity += quants[i];
 						} else {
-							M.bin = bin;
-							insertB(M, cur.previousB, cur);
+							//new type
+							Node M = new Node();
+							M.fruit = fruits[i];
+							M.quantity = quants[i];
+							//add to N list
+							insertN(M, cursorN.previousN, cursorN);
+							//add to B list
+							int bin = 0;
+							Node cur = headB.nextB;
+							if(cur.bin > 1)
+								bin = 1;
+	
+							for(i = 1; i < size; i++) {
+								cur = cur.nextB;
+								if(cur.bin - cur.previousB.bin > 1)
+									bin = cur.previousB.bin+1;
+							}
+							if(bin == 0) {
+								//nextB is headB and we found no result already
+								bin = highBin;
+								highBin++;
+								M.bin = bin;
+								//will be the last element
+								insertB(M, headB.previousB.previousB, headB);
+							} else {
+								M.bin = bin;
+								insertB(M, cur.previousB, cur);
+							}
+							
 						}
-						
 					}
 				}
 					
 			}
 		 } else {
 			 //add all new bins
-			 for(i = 0; i < size; i++) {
+			 for(i = 0; i < len; i++) {
 				 add(fruits[i], quants[i]);
 			 }
 		 }
+		 ****/
+			 if(size > 0) {
+					//walk the lists
+					Node cursorN = headN.nextN;
+					Node cursorB = headB.nextB;
+					for(i = 0; i < size; i++, cursorN = cursorN.nextN, cursorB = cursorB.nextB) {
+						if(cursorN.fruit.compareTo(fruits[i]) >= 0) {
+							if(cursorN.fruit.compareTo(fruits[i]) == 0) {
+								//same fruit
+								cursorN.quantity += quants[i];
+							} else {
+								//new type
+								Node M = new Node();
+								M.fruit = fruits[i];
+								M.quantity = quants[i];
+								//add to N list
+								insertN(M, cursorN.previousN, cursorN);
+								//add to B list
+								int bin = 0;
+								Node cur = headB.nextB;
+								if(cur.bin > 1)
+									bin = 1;
+	
+								for(i = 1; i < size; i++) {
+									cur = cur.nextB;
+									if(cur.bin - cur.previousB.bin > 1)
+										bin = cur.previousB.bin+1;
+								}
+								if(bin == 0) {
+									//nextB is headB and we found no result already
+									bin = highBin;
+									highBin++;
+									M.bin = bin;
+									//will be the last element
+									insertB(M, headB.previousB.previousB, headB);
+								} else {
+									M.bin = bin;
+									insertB(M, cur.previousB, cur);
+								}
+								
+							}
+						}
+							
+					}
+				 } else {
+					 //add all new bins
+					 for(i = 0; i < len; i++) {
+						 add(fruits[i], quants[i]);
+					 }
+				 }
 		 
 		 
 	 }
@@ -398,7 +456,72 @@ public class DoublySortedList
 	 public void bulkSell(String fruitFile) throws FileNotFoundException, IllegalArgumentException
 	 {
 		 // TODO 
+		//read the file
+		 String[] fruitsMax = new String[maxFruit];
+		 int[] quantsMax = new int[maxFruit];
+		 
+		File file = new File(fruitFile);
+		Scanner s = new Scanner(file);
+		int i = 0, j = 0;
+		while(s.hasNextLine()) {
+			String line = s.nextLine();
+			Scanner l = new Scanner(line);
+			//System.out.println(line);
+			String fruit = l.next();
+			int quantity = l.nextInt();
+			
+			if(quantity < 0) {
+				l.close();
+				s.close();
+				throw new IllegalArgumentException();
+			}
+			
+			fruitsMax[i] = fruit;
+			quantsMax[j] = quantity;
+			i++;
+			j++;
+			
+			l.close();
+		}
+		s.close();
+		int len = i; // was i+1
+		
+		String[] fruits = new String[len];
+		 Integer[] quants = new Integer[len];
+		 
+		 for(i = 0; i < len; i++) {
+			 fruits[i] = fruitsMax[i];
+			 quants[i] = quantsMax[i];
+		 }
+		 
+		 
 		 //quicksort
+		 //sort the 2 arrays with Quicksort
+		 quickSort(fruits, quants, len);
+		 
+		 //sell
+		 /*
+		   2. Traverse the N-list. Whenever a node with the next needed fruit is encountered, 
+			  *        let m be the ordered quantity of this fruit, and do the following: 
+			  *        a) if m < 0, throw an IllegalArgumentException; 
+			  *        b) if m == 0, ignore. 
+			  *        c) if 0 < m < node.quantity, decrease node.quantity by n. 
+			  *        d) if m >= node.quanity, call remove(node).
+		 */
+		 Node cursorN = headN.nextN;
+		 int h = 0;
+		 for(i = 0; i < size; i++, cursorN = cursorN.nextN) {
+			 if(fruits[h].compareTo(cursorN.fruit) == 0) {
+				 //found a fruit
+				 if(quants[h] < 0)
+					 throw new IllegalArgumentException();
+				 else if(quants[h] > 0 && quants[h] < cursorN.quantity)
+					 cursorN.quantity -= quants[h];
+				 else if(quants[h] >= cursorN.quantity)
+					 remove(cursorN);
+				 h++;
+			 }
+		 }
 		 
 		 
 	 }
@@ -845,43 +968,6 @@ public class DoublySortedList
 		 return null;
 	 }
 	 
-	 /**
-	  * Swaps two nodes within a given list specified by listN
-	  * @param a first node to swap
-	  * @param b second node to swap
-	  * @param listN if true swaps within the N list, otherwise, swaps within the B list
-	  */
-	 private void swap(Node a, Node b, boolean listN) {
-		 if(listN) {
-			 //N
-			 Node tmp = new Node();
-			 tmp.nextN = b.nextN;
-			 tmp.previousN = b.previousN;
-			 b.nextN = a.nextN;
-			 b.previousN = a.previousN;
-			 a.nextN = tmp.nextN;
-			 a.previousN = tmp.previousN;
-			 
-			 b.previousN.nextN = b;
-			 b.nextN.previousN = b;
-			 a.previousN.nextN = a;
-			 a.nextN.previousN = a;
-		 } else {
-			 //B
-			 Node tmp = new Node();
-			 tmp.nextB = b.nextB;
-			 tmp.previousB = b.previousB;
-			 b.nextB = a.nextB;
-			 b.previousB = a.previousB;
-			 a.nextB = tmp.nextB;
-			 a.previousB = tmp.previousB;
-			 
-			 b.previousB.nextB = b;
-			 b.nextB.previousB = b;
-			 a.previousB.nextB = a;
-			 a.nextB.previousB = a;
-		 }
-	 }
 	 
 	 /***
 	  * insertion sorts a dsl's n list
@@ -929,33 +1015,4 @@ public class DoublySortedList
 		// System.out.println(dslHeadN.previousN.fruit);
 	 }
 	 
-	 
-	 /***
-	  * adds a node to the n list of a dsl
-	  * @param dsl
-	  * @param n
-	  */
-	 private void addN(DoublySortedList dsl, Node n) {
-		 dsl.insertN(n, dsl.headN.previousN, headN);
-	 }
-	 
-	 /***
-	  * adds a node to the b list of a dsl
-	  * @param dsl
-	  * @param n
-	  */
-	 private void addB(DoublySortedList dsl, Node n) {
-		 dsl.insertB(n, dsl.headB.previousB, headB);
-	 }
-	 
-	 
-		/***
-		 * 
-		 * @param to
-		 * @param from
-		 * @param listN true -> N list ;; false -> B list
-		 */
-		private void copyNode(Node to, Node from, boolean listN) {
-			
-		}
 }

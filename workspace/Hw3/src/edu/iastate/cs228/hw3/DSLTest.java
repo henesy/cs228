@@ -35,14 +35,16 @@ public class DSLTest
 		//second test battery
 		DoublySortedList dsl2 = new DoublySortedList("test.txt.txt");
 		System.out.println(dsl2.toString());
+		System.out.println(dsl2.printInventoryB());
 		
 		//insertion sort
+		/*
+		dsl.insertionSort(true, new NameComparator());
+		System.out.println(dsl.toString());
+		*/
 		dsl.add("katieberry", 12);
 		dsl.add("seanberry", 69);
 		dsl.add("bberry", 51);
-		dsl.insertionSort(true, new NameComparator());
-		System.out.println(dsl.toString());
-		
 		
 		//split
 		Pair<DoublySortedList> p = dsl2.split();
@@ -52,6 +54,10 @@ public class DSLTest
 		
 		//restock
 		dsl2.restock("restock.txt");
+		System.out.println(dsl2.toString());
+		dsl2.restock("restock.txt");
+		System.out.println(dsl2.toString());
+		dsl2.bulkSell("restock.txt");
 		System.out.println(dsl2.toString());
 
 	}

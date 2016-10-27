@@ -77,6 +77,7 @@
 		<item value="false" key="JarManifestWizardPage.SAVE_MANIFEST"/>
 		<item value="false" key="JarPackageWizardPage.EXPORT_OUTPUT_FOLDER"/>
 		<list key="JarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="U:\cs228\Sean_Hinchee_HW3.zip"/>
 			<item value="U:\cs228\Sean_Hinchee_HW1.zip"/>
 		</list>
 	</section>
