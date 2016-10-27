@@ -542,7 +542,7 @@ public class DoublySortedList
 		 DoublySortedList a = new DoublySortedList();
 		 DoublySortedList b = new DoublySortedList();
 		 
-		 int median = size/2;
+		 int median = size/2-1;
 		 //7/2 = 3 (split of 3 | 4)
 		 //up to and including the median
 		 Node M = new Node();
@@ -550,32 +550,56 @@ public class DoublySortedList
 		 //populate N lists
 		 int i;
 		 Node cursor = headN.nextN;
-		 for(i = 0; i < size; i++, cursor = cursor.nextN) {
+		 Node cursorT = cursor;
+		 for(i = 0; i < size; i++, cursor = cursorT) {
+			 cursorT = cursorT.nextN;
 			 if(i <= median) {
 			 	//a.add(cursor.fruit, cursor.quantity);
-				 addN(a, cursor);
+				// addN(a, cursor);
+				 insertN(cursor, a.headN.previousN, a.headN);
+			//	 System.out.println("adding to a");
+				 a.size++;
 			 } else {
 				//b.add(cursor.fruit, cursor.quantity);
-				 addN(b, cursor);
+				 //addN(b, cursor);
+				 insertN(cursor, b.headN.previousN, b.headN);
+				// System.out.println("adding to b");
+				 b.size++;
 			 }
 			 if(i == median)
-				 M = cursor;
+				 M = cursorT.previousN;
+			 //System.out.println(i);
+			 //System.out.println(cursorT.fruit);
+			// System.out.println(a.toString());
+			// System.out.println(cursor.fruit);
 		 }
+		 		 
+		 //System.out.println(median +  " "+ M.fruit);
+		 
 		 insertionSort(a);
 		 insertionSort(b);
 		 
 		 cursor = headB.nextB;
-		 for(i = 0; i < size; i++, cursor = cursor.nextB) {
+		 cursorT = cursor;
+		 for(i = 0; i < size; i++, cursor = cursorT.previousB) {
+			 cursorT = cursorT.nextB;
 			 if(cursor.fruit.compareTo(M.fruit) <= 0) {
 				 //add to a
-				 addB(b, cursor);
+				 //addB(a, cursor);
+				 insertB(cursor, a.headB.previousB, a.headB);
 			 } else {
 				 //add to b
-				 addB(b, cursor);
+				 //addB(b, cursor);
+				 insertB(cursor, b.headB.previousB, b.headB);
 			 }
 		 }
 		 
-		 
+		 size = 0;
+		 headN.nextN = headN;
+		 headN.previousN = headN;
+		 headB.nextB = headB;
+		 headB.previousB = headB;
+		 highBin = 1;
 		 return new Pair<DoublySortedList>(a, b); 
 	 }
 	 
@@ -874,7 +898,7 @@ public class DoublySortedList
 		 Node nextI = new Node();
 		 
 		 int i;
-		 for(i = 1; i < size; i++) {
+		 for(i = 1; i < dsl.size; i++) {
 			// Point tmp = points[i];
 			 int h = i;
 			cursorH = cursorI;
@@ -912,7 +936,7 @@ public class DoublySortedList
 	  * @param n
 	  */
 	 private void addN(DoublySortedList dsl, Node n) {
-		 
+		 dsl.insertN(n, dsl.headN.previousN, headN);
 	 }
 	 
 	 /***
@@ -921,7 +945,7 @@ public class DoublySortedList
 	  * @param n
 	  */
 	 private void addB(DoublySortedList dsl, Node n) {
-		 
+		 dsl.insertB(n, dsl.headB.previousB, headB);
 	 }
 	 
 	 

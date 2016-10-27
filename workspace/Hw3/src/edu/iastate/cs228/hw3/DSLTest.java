@@ -43,9 +43,14 @@ public class DSLTest
 		dsl.insertionSort(true, new NameComparator());
 		System.out.println(dsl.toString());
 		
-			
+		
+		//split
+		Pair<DoublySortedList> p = dsl2.split();
+		System.out.println(p.getFirst().toString());
+		System.out.println(p.getSecond().toString());
 		
 		
+		//restock
 		dsl2.restock("restock.txt");
 		System.out.println(dsl2.toString());
 
