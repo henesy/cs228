@@ -143,3 +143,7 @@ Caused by: org.eclipse.aether.transfer.ArtifactTransferException: Failure to tra
 2016-10-26 18:13:39,042 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2016-10-26 21:21:36,490 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2016-10-26 23:44:55,319 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-10-27 16:16:30,445 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-03 23:34:50,844 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-11-03 23:34:51,728 [Thread-6] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+

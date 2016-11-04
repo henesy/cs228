@@ -53,7 +53,6 @@ public class Node
      */
     public String toString() 
     {
-    	// TODO 
     	
         return fruit + "\t" + quantity + "\t" + bin + "\n"; 
     }
