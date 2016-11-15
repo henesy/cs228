@@ -1,5 +1,9 @@
 package edu.iastate.cs228.hw4;
 
+/**
+ * @author Sean Hinchee
+ */
+
 import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.ArrayList; 
@@ -25,6 +29,8 @@ public class GrahamScan extends ConvexHull
 	{
 		super(pts); 
 		// TODO 
+		super.algorithm = "graham";
+		vertexStack = new ArrayBasedStack<Point>();
 	}
 	
 
@@ -39,6 +45,8 @@ public class GrahamScan extends ConvexHull
 	{
 		super(inputFileName); 
 		// TODO 
+		super.algorithm = "graham";
+		vertexStack = new ArrayBasedStack<Point>();
 	}
 
 	
@@ -70,6 +78,44 @@ public class GrahamScan extends ConvexHull
 	public void constructHull()
 	{
 		// TODO
+		if(pointsNoDuplicate.length == 1) {
+			hullVertices = new Point[1];
+			hullVertices[0] = pointsNoDuplicate[0];
+		} else if(pointsNoDuplicate.length == 2) {
+			hullVertices = new Point[1];
+			hullVertices[0] = pointsNoDuplicate[0];
+			hullVertices[1] = pointsNoDuplicate[1];
+		} else {
+			setUpScan();
+			
+			vertexStack.push(pointsNoDuplicate[0]);
+			vertexStack.push(pointsNoDuplicate[1]);
+			
+			//get the sorted stuff
+			Point[] pts = new Point[pointsNoDuplicate.length];
+			quicksorter.getSortedPoints(pts);
+			Point tmp = new Point();
+			int i = 0;
+			while(i < pts.length) {
+				tmp = pts[i];
+				vertexStack.push(tmp);
+				/*
+				if(tmp.compareTo(pointsNoDuplicate[1]) != 0) {
+					
+				}
+				*/
+				i++;
+			}
+			
+			
+			hullVertices = new Point[vertexStack.size()];
+			for(i = vertexStack.size() -1; i >= 0; i--) {
+				hullVertices[i] = vertexStack.pop();
+			}
+		}
+		
+		//handle degenerate cases
+		
 	}
 	
 	
@@ -85,5 +131,7 @@ public class GrahamScan extends ConvexHull
 	public void setUpScan()
 	{
 		// TODO 
+		quicksorter = new QuickSortPoints(pointsNoDuplicate);
+		quicksorter.quickSort(new PolarAngleComparator(lowestPoint, true));
 	}	
 }

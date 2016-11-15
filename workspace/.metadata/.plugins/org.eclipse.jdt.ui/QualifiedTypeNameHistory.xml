@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw1.State"/>
-<fullyQualifiedTypeName name="java.util.Comparator"/>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw2.PolarAngleComparator"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
 <fullyQualifiedTypeName name="java.io.FileReader"/>
@@ -11,4 +10,12 @@
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw3.BinComparator"/>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw3.NameComparator"/>
+<fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+<fullyQualifiedTypeName name="java.lang.IllegalStateException"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw4.PureStack"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw4.QuickSortPoints"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw4.PolarAngleComparator"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw4.ArrayBasedStack"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw4.GrahamScan"/>
 </qualifiedTypeNameHistroy>

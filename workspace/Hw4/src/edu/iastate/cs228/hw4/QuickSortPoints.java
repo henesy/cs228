@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 /**
+ * @author Sean Hinchee
+ */
+
+/**
  * This class sorts an array of Point objects using a provided Comparator.  You may 
  * modify your implementation of quicksort from Project 2.  
  */
@@ -11,7 +15,6 @@ import java.util.Comparator;
 public class QuickSortPoints
 {
 	private Point[] points;  	// Array of points to be sorted.
-	
 
 	/**
 	 * Constructor takes an array of Point objects. 
@@ -21,6 +24,15 @@ public class QuickSortPoints
 	QuickSortPoints(Point[] pts)
 	{
 		// ToDo 
+		if(pts == null || pts.length == 0)
+			throw new IllegalArgumentException();
+		points = new Point[pts.length];
+		int i;
+		for(i = 0; i < pts.length; i++) {
+			Point tmp;
+			tmp = pts[i];
+			points[i] = tmp;
+		}
 	}
 	
 	
@@ -32,6 +44,11 @@ public class QuickSortPoints
 	void getSortedPoints(Point[] pts)
 	{
 		// ToDo 
+		int i;
+		for(i = 0; i < points.length; i++) {
+			Point tmp = points[i];
+			pts[i] = tmp;
+		}
 	}
 
 	
@@ -44,6 +61,7 @@ public class QuickSortPoints
 	public void quickSort(Comparator<Point> comp)
 	{
 		// TODO 
+		quickSortRec(0, points.length-1, comp);
 	}
 	
 	
@@ -56,6 +74,10 @@ public class QuickSortPoints
 	private void quickSortRec(int first, int last, Comparator<Point> comp)
 	{
 		// TODO 
+		if(first >= last) return;
+		int p = partition(first, last, comp);
+		quickSortRec(first, p - 1, comp);
+		quickSortRec(p + 1, last, comp);
 	}
 	
 
@@ -68,9 +90,29 @@ public class QuickSortPoints
 	 */
 	private int partition(int first, int last, Comparator<Point> comp)
 	{
-		return 0; 
 		// TODO
+		Point pivot = points[last];
+		int i = first - 1;
+		
+		int j;
+		for(j = first; j < last; j++) {
+			if(comp.compare(points[j], pivot) <= 0) {
+				i++;
+				swap(i, j);
+			}
+			
+		}
+		swap(i+1, last);
+		
+		return i + 1;
 	}
+	
+	private void swap(int i, int j)
+	{
+		Point t = points[i];
+		points[i] = points[j];
+		points[j] = t;
+	}	
 }
 
 

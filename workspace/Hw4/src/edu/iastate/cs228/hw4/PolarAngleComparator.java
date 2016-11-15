@@ -2,12 +2,11 @@ package edu.iastate.cs228.hw4;
 
 /**
  *  
- * @author
+ * @author Sean Hinchee
  *
  */
 
 import java.util.Comparator;
-
 /**
  * 
  * This class compares two points p1 and p2 by polar angle with respect to a reference point.  
@@ -51,8 +50,18 @@ public class PolarAngleComparator implements Comparator<Point>
 	 */
 	public int compare(Point p1, Point p2)
 	{
-		// TODO
-		return 0; 
+		//TODO
+		if(p1.compareTo(p2) == 0)
+			return 0;
+		
+		if(crossProduct(p1, p2) > 0)
+			return -1;
+		else if(flag == true && compareDistance(p1, p2) < 0 && crossProduct(p1, p2) == 0)
+			return -1;
+		else if(flag == false && compareDistance(p1, p2) > 0 && crossProduct(p1, p2) == 0)
+			return -1;
+		else
+			return 1;
 	}
 	    
 
@@ -64,8 +73,9 @@ public class PolarAngleComparator implements Comparator<Point>
      */
     private int crossProduct(Point p1, Point p2)
     {
-    	// TODO 
-    	return 0; 
+    	Point a = new Point(p1.getX() - referencePoint.getX(), p1.getY() - referencePoint.getY());
+    	Point b = new Point(p2.getX() - referencePoint.getX(), p2.getY() - referencePoint.getY());
+    	return a.getX() * b.getY() - b.getX() * a.getY(); 
     }
 
     /**
@@ -76,7 +86,67 @@ public class PolarAngleComparator implements Comparator<Point>
      */
     private int dotProduct(Point p1, Point p2)
     {
+    	Point a = new Point(p1.getX() - referencePoint.getX(), p1.getY() - referencePoint.getY());
+    	Point b = new Point(p2.getX() - referencePoint.getX(), p2.getY() - referencePoint.getY());
+    	return a.getX() * b.getX() + a.getY() * b.getY(); 
+    }
+    
+    /**
+	 * Compare the polar angles of two points p1 and p2 with respect to referencePoint.  Use 
+	 * cross products.  Do not use trigonometric functions. 
+	 * 
+	 * Ought to be private but made public for testing purpose. 
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @return    0  if p1 and p2 have the same polar angle.
+	 * 			 -1  if p1 equals referencePoint or its polar angle with respect to referencePoint
+	 *               is less than that of p2. 
+	 *            1  otherwise. 
+	 */
+    public int comparePolarAngle(Point p1, Point p2) 
+    {
+    	int r = crossProduct(p1, p2);
+    	
+    	r *= -1;
+    	
+    	if(r < 0)
+    		r = -1;
+    	else if(r > 0)
+    		r = 1;
+    	else
+    		r = 0;
+    	
+    	return r;
+    }
+    
+    
+    /**
+     * Compare the distances of two points p1 and p2 to referencePoint.  Use dot products. 
+     * Do not take square roots. 
+     * 
+     * Ought to be private but made public for testing purpose.
+     * 
+     * @param p1
+     * @param p2
+     * @return    0   if p1 and p2 are equidistant to referencePoint
+     * 			 -1   if p1 is closer to referencePoint 
+     *            1   otherwise (i.e., if p2 is closer to referencePoint)
+     */
+    public int compareDistance(Point p1, Point p2)
+    {
     	// TODO 
-    	return 0; 
+    	int p1d = dotProduct(p1, p1);
+    	int p2d = dotProduct(p2, p2);
+    	int r = p1d - p2d;
+    	
+    	if(r < 0)
+    		r = -1;
+    	else if(r > 0)
+    		r = 1;
+    	else
+    		r = 0;
+    	
+    	return r; 
     }
 }

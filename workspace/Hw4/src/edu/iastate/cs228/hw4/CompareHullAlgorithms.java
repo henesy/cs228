@@ -2,7 +2,7 @@ package edu.iastate.cs228.hw4;
 
 /**
  *  
- * @author
+ * @author Sean Hinchee
  *
  */
 
@@ -15,7 +15,7 @@ package edu.iastate.cs228.hw4;
  */
 
 import java.io.FileNotFoundException;
-import java.util.Scanner; 
+import java.util.Scanner;
 import java.util.Random; 
 
 
@@ -46,13 +46,24 @@ public class CompareHullAlgorithms
 		// 
 		// A sample scenario is given in Section 4 of the project description. 
 		// 	
-		ConvexHull[] algorithms = new ConvexHull[2]; 
+		
+		//ConvexHull[] algorithms = new ConvexHull[2]; 
 		
 		// Within a hull construction round, have each algorithm call the constructHull() and draw()
 		// methods in the ConvexHull class.  You can visually check the result. (Windows 
 		// have to be closed manually before rerun.)  Also, print out the statistics table 
 		// (see Section 4). 
-		
+		Random rand = new Random();
+		Point[] pts0 = generateRandomPoints(10, rand);
+		ConvexHull ch0 = new GrahamScan(pts0);
+		//ConvexHull ch0 = new JarvisMarch(pts0);
+		//ch0.removeDuplicates();
+		int i;
+		for(i = 0; i < ch0.pointsNoDuplicate.length; i++) {
+			System.out.println(ch0.pointsNoDuplicate[i]);
+		}
+		ch0.constructHull();
+		ch0.draw();
 	}
 	
 	
@@ -68,7 +79,16 @@ public class CompareHullAlgorithms
 	 */
 	private static Point[] generateRandomPoints(int numPts, Random rand) throws IllegalArgumentException
 	{ 
-		return null; 
 		// TODO 
+		if(numPts < 1)
+			throw new IllegalArgumentException();
+		
+		Point[] pts = new Point[numPts];
+		int i;
+		for(i = 0; i < pts.length; i++) {
+			pts[i] = new Point(rand.nextInt(101) - 50, rand.nextInt(101) - 50);
+		}
+		
+		return pts;
 	}
 }

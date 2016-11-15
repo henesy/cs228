@@ -147,3 +147,25 @@ Caused by: org.eclipse.aether.transfer.ArtifactTransferException: Failure to tra
 2016-11-03 23:34:50,844 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
 2016-11-03 23:34:51,728 [Thread-6] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
 
+2016-11-12 15:12:20,866 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-11-14 17:55:25,671 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-11-14 17:55:27,614 [Thread-7] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-14 21:44:20,986 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-14 21:44:21,769 [Thread-6] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-14 22:34:04,388 [Thread-4] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-14 22:36:37,857 [Thread-4] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-14 22:39:39,818 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-14 22:43:21,411 [Thread-4] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-14 22:43:30,017 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-15 00:07:46,895 [Thread-4] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-15 00:07:56,344 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-15 13:33:49,988 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-11-15 16:47:24,436 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-15 16:47:26,114 [Thread-8] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
