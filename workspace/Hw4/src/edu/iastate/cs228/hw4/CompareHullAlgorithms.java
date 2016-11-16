@@ -16,6 +16,7 @@ package edu.iastate.cs228.hw4;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 import java.util.Random; 
 
 
@@ -29,7 +30,6 @@ public class CompareHullAlgorithms
 	 **/
 	public static void main(String[] args) 
 	{		
-		// TODO 
 		// 
 		// Conducts multiple rounds of convex hull construction. Within each round, performs the following: 
 		// 
@@ -53,17 +53,65 @@ public class CompareHullAlgorithms
 		// methods in the ConvexHull class.  You can visually check the result. (Windows 
 		// have to be closed manually before rerun.)  Also, print out the statistics table 
 		// (see Section 4). 
-		Random rand = new Random();
-		Point[] pts0 = generateRandomPoints(10, rand);
-		ConvexHull ch0 = new GrahamScan(pts0);
-		//ConvexHull ch0 = new JarvisMarch(pts0);
-		//ch0.removeDuplicates();
-		int i;
-		for(i = 0; i < ch0.pointsNoDuplicate.length; i++) {
-			System.out.println(ch0.pointsNoDuplicate[i]);
+		
+		Scanner s = new Scanner(System.in);
+		ConvexHull[] sorters = new ConvexHull[2]; 
+		System.out.println("Comparison of Convex Hull Algorithms");
+		System.out.println("keys: 1 (random integers)  2 (file input)  3 (exit)");
+
+		int t = 1;
+		while(true) {
+			System.out.printf("Trial %d: ", t);
+			int r = s.nextInt();
+			if(r == 1) {
+				//random ints
+				System.out.printf("Enter number of random points: ");
+				int length = s.nextInt();
+				
+				Point[] pts = generateRandomPoints(length, new Random());
+				sorters[0] = new GrahamScan(pts);
+				sorters[1] = new JarvisMarch(pts);
+			} else if(r == 2) {
+				//file input
+				System.out.printf("File name: ");
+				String name = s.next();
+				
+				try {
+					sorters[0] = new GrahamScan(name);
+				} catch (InputMismatchException e) {
+					e.printStackTrace();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				try {
+					sorters[1] = new JarvisMarch(name);
+				} catch (InputMismatchException e) {
+					e.printStackTrace();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			} else {
+				break;
+			}
+			
+			System.out.printf("%12s\t%9s\t%9s\n", "algorithm", "size", "time (ns)");
+			System.out.println("------------------------------------");
+			
+			int i;
+			for(i = 0; i < sorters.length; i++) {
+				//run algos 
+				sorters[i].constructHull();
+				sorters[i].draw();
+				System.out.println(sorters[i].stats());
+				sorters[i].writeHullToFile();
+
+			}
+			
+			System.out.println("------------------------------------");
+					
+			t++;
 		}
-		ch0.constructHull();
-		ch0.draw();
+		s.close();
 	}
 	
 	
@@ -79,7 +127,6 @@ public class CompareHullAlgorithms
 	 */
 	private static Point[] generateRandomPoints(int numPts, Random rand) throws IllegalArgumentException
 	{ 
-		// TODO 
 		if(numPts < 1)
 			throw new IllegalArgumentException();
 		

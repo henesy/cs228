@@ -86,7 +86,6 @@ public abstract class ConvexHull
 	 */
 	public ConvexHull(Point[] pts) throws IllegalArgumentException 
 	{
-		// TODO 
 		if(pts.length == 0) throw new IllegalArgumentException();
 		
 		points = new Point[pts.length];
@@ -120,7 +119,6 @@ public abstract class ConvexHull
 	 */
 	public ConvexHull(String inputFileName) throws FileNotFoundException, InputMismatchException
 	{
-		// TODO 
 		Scanner s;
 		Point lp;
 		ArrayList<Integer> al = new ArrayList<Integer>();
@@ -165,6 +163,12 @@ public abstract class ConvexHull
 		lowestPoint = lp;
 		//outputFileName = ???; //set by child sorter constructor method ;; this should be called as super();
 		s.close();
+		
+		quicksorter = new QuickSortPoints(points);
+		
+		removeDuplicates();
+		
+		lowestPoint = pointsNoDuplicate[0];
 	}
 
 	
@@ -188,7 +192,6 @@ public abstract class ConvexHull
 	 */
 	public String stats()
 	{
-		// TODO 
 		String s = "";
 		s += String.format("%17s", algorithm);
 		s += "\t" + points.length + "\t";
@@ -211,7 +214,6 @@ public abstract class ConvexHull
 	 */
 	public String toString()
 	{
-		// TODO 
 		String s = "";
 		
 		int i;
@@ -248,7 +250,6 @@ public abstract class ConvexHull
 	 */
 	public void writeHullToFile() throws IllegalStateException 
 	{
-		// TODO 
 		if(hullVertices == null) throw new IllegalStateException();
 		
 		File f = new File("hull.txt");
@@ -256,8 +257,9 @@ public abstract class ConvexHull
 		try {
 			pw = new PrintWriter(f);
 			pw.write(this.toString());
+			pw.flush();
+			pw.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -277,7 +279,6 @@ public abstract class ConvexHull
 		// Assign their number to numSegs, and store them in segments[] in the order. 
 		Segment[] segments = new Segment[numSegs]; 
 		
-		// TODO 
 		int i, j;
 		for(i = 0, j = 0; i < hullVertices.length && j < segments.length; i++, j++) {
 			segments[j] = new Segment(hullVertices[i], hullVertices[i+1]);
@@ -299,7 +300,6 @@ public abstract class ConvexHull
 	 */
 	public void removeDuplicates()
 	{
-		// TODO
 		Comparator<Point> comp = new Comparator<Point>() {
 			@Override
 			public int compare(Point p, Point q) {

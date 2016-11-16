@@ -23,7 +23,6 @@ public class QuickSortPoints
 	 */
 	QuickSortPoints(Point[] pts)
 	{
-		// ToDo 
 		if(pts == null || pts.length == 0)
 			throw new IllegalArgumentException();
 		points = new Point[pts.length];
@@ -43,7 +42,6 @@ public class QuickSortPoints
 	 */
 	void getSortedPoints(Point[] pts)
 	{
-		// ToDo 
 		int i;
 		for(i = 0; i < points.length; i++) {
 			Point tmp = points[i];
@@ -60,7 +58,6 @@ public class QuickSortPoints
 	 */
 	public void quickSort(Comparator<Point> comp)
 	{
-		// TODO 
 		quickSortRec(0, points.length-1, comp);
 	}
 	
@@ -73,7 +70,6 @@ public class QuickSortPoints
 	 */
 	private void quickSortRec(int first, int last, Comparator<Point> comp)
 	{
-		// TODO 
 		if(first >= last) return;
 		int p = partition(first, last, comp);
 		quickSortRec(first, p - 1, comp);
@@ -90,7 +86,6 @@ public class QuickSortPoints
 	 */
 	private int partition(int first, int last, Comparator<Point> comp)
 	{
-		// TODO
 		Point pivot = points[last];
 		int i = first - 1;
 		

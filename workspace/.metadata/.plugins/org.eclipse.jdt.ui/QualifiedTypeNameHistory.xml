@@ -14,8 +14,8 @@
 <fullyQualifiedTypeName name="java.lang.IllegalStateException"/>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw4.PureStack"/>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw4.QuickSortPoints"/>
-<fullyQualifiedTypeName name="edu.iastate.cs228.hw4.PolarAngleComparator"/>
 <fullyQualifiedTypeName name="java.util.Comparator"/>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw4.ArrayBasedStack"/>
 <fullyQualifiedTypeName name="edu.iastate.cs228.hw4.GrahamScan"/>
+<fullyQualifiedTypeName name="edu.iastate.cs228.hw4.PolarAngleComparator"/>
 </qualifiedTypeNameHistroy>

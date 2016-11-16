@@ -32,7 +32,6 @@ public class JarvisMarch extends ConvexHull
 	public JarvisMarch(Point[] pts) throws IllegalArgumentException 
 	{
 		super(pts); 
-		// TODO 
 		super.algorithm = "jarvis";
 		leftChain = new ArrayBasedStack<Point>();
 		rightChain = new ArrayBasedStack<Point>();
@@ -62,7 +61,6 @@ public class JarvisMarch extends ConvexHull
 	public JarvisMarch(String inputFileName) throws FileNotFoundException, InputMismatchException
 	{
 		super(inputFileName); 
-		// TODO 
 		super.algorithm = "jarvis";
 		leftChain = new ArrayBasedStack<Point>();
 		rightChain = new ArrayBasedStack<Point>();
@@ -99,7 +97,8 @@ public class JarvisMarch extends ConvexHull
 	 */
 	public void constructHull()
 	{
-		// TODO
+		time = System.nanoTime();
+		
 		if(pointsNoDuplicate.length == 1) {
 			hullVertices = new Point[1];
 			hullVertices[0] = pointsNoDuplicate[0];
@@ -109,18 +108,18 @@ public class JarvisMarch extends ConvexHull
 			hullVertices[1] = pointsNoDuplicate[1];
 		} else {
 			
-			System.out.println("Before infinite loop here!");
+			//////system.out.println("Before infinite loop here!");
 			//infinite loop in here somewhere
 
 			createRightChain();
-			System.out.println("After right chain!");
+			//////system.out.println("After right chain!");
 			createLeftChain();
 						
 			hullVertices = new Point[ leftChain.size() + rightChain.size()];
 			
 			//merge left half then right half
 			int i;
-			for(i = 0; i < leftChain.size() + rightChain.size(); i++) {
+			for(i = 0; i < hullVertices.length; i++) {
 				Point tmp;
 				if(leftChain.size() > 0)
 					tmp = leftChain.pop();
@@ -130,6 +129,8 @@ public class JarvisMarch extends ConvexHull
 			}
 			
 		}
+		time = System.nanoTime() - time;
+		
 		
 	}
 	
@@ -146,8 +147,7 @@ public class JarvisMarch extends ConvexHull
 	 */
 	public void createRightChain()
 	{
-		// TODO 
-		System.out.println(highestPoint.toString() + " " + lowestPoint.toString());
+		//////system.out.println(highestPoint.toString() + " " + lowestPoint.toString());
 		Point tmp = lowestPoint;
 		Point tmpLast = new Point();
 		rightChain.push(tmp);
@@ -155,7 +155,7 @@ public class JarvisMarch extends ConvexHull
 			tmp = nextVertex(tmp);
 			if(tmp.compareTo(tmpLast) == 0)
 				break;
-			System.out.println(tmp.toString());
+			//////system.out.println(tmp.toString());
 			rightChain.push(tmp);
 			tmpLast = tmp;
 		}
@@ -172,7 +172,6 @@ public class JarvisMarch extends ConvexHull
 	 */
 	public void createLeftChain()
 	{
-		// TODO 
 		Point tmp = highestPoint;
 		Point tmpLast = new Point();
 		leftChain.push(tmp);
@@ -180,7 +179,7 @@ public class JarvisMarch extends ConvexHull
 			tmp = nextVertex(tmp);
 			if(tmp.compareTo(tmpLast) == 0)
 				break;
-			System.out.println(tmp.toString());
+			//////system.out.println(tmp.toString());
 			leftChain.push(tmp);
 			tmpLast = tmp;
 		}

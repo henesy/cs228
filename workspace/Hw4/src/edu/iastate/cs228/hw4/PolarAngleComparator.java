@@ -50,18 +50,19 @@ public class PolarAngleComparator implements Comparator<Point>
 	 */
 	public int compare(Point p1, Point p2)
 	{
-		//TODO
 		if(p1.compareTo(p2) == 0)
 			return 0;
 		
 		if(crossProduct(p1, p2) > 0)
 			return -1;
-		else if(flag == true && compareDistance(p1, p2) < 0 && crossProduct(p1, p2) == 0)
+		
+		if(flag == true && compareDistance(p1, p2) < 0 && crossProduct(p1, p2) == 0)
 			return -1;
-		else if(flag == false && compareDistance(p1, p2) > 0 && crossProduct(p1, p2) == 0)
+		
+		if(flag == false && compareDistance(p1, p2) > 0 && crossProduct(p1, p2) == 0)
 			return -1;
-		else
-			return 1;
+		
+		return 1;
 	}
 	    
 
@@ -135,7 +136,6 @@ public class PolarAngleComparator implements Comparator<Point>
      */
     public int compareDistance(Point p1, Point p2)
     {
-    	// TODO 
     	int p1d = dotProduct(p1, p1);
     	int p2d = dotProduct(p2, p2);
     	int r = p1d - p2d;
