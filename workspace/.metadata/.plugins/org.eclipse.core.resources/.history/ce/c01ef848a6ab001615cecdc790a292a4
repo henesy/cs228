@@ -203,7 +203,6 @@ public class JarvisMarch extends ConvexHull
 	public Point nextVertex(Point v)
 	{
 		PolarAngleComparator comp = new PolarAngleComparator(v, false);
-		referencePoint = v;
 		
 		Point lp = super.pointsNoDuplicate[0];
 		

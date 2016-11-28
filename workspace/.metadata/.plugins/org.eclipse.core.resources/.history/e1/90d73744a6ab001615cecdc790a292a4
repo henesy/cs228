@@ -203,7 +203,6 @@ public class JarvisMarch extends ConvexHull
 	public Point nextVertex(Point v)
 	{
 		PolarAngleComparator comp = new PolarAngleComparator(v, false);
-		referencePoint = v;
 		
 		Point lp = super.pointsNoDuplicate[0];
 		
@@ -212,7 +211,7 @@ public class JarvisMarch extends ConvexHull
 			if(comp.compare(super.pointsNoDuplicate[i], lp) < 0 && super.pointsNoDuplicate[i].compareTo(v) != 0) {
 				lp = super.pointsNoDuplicate[i];
 			} else if(comp.compare(super.pointsNoDuplicate[i], lp) == 0 && super.pointsNoDuplicate[i].compareTo(v) != 0) {
-				if(compareDistance(super.pointsNoDuplicate[i], lp) > 0)
+				if(comp.compareDistance(super.pointsNoDuplicate[i], lp) > 0)
 					lp = super.pointsNoDuplicate[i];
 			}
 		}

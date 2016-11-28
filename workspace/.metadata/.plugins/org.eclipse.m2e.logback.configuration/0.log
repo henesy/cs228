@@ -175,3 +175,6 @@ Caused by: org.eclipse.aether.transfer.ArtifactTransferException: Failure to tra
 2016-11-15 20:12:05,704 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2016-11-15 20:12:06,498 [Thread-5] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
 
+2016-11-15 20:18:21,171 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-11-15 20:18:21,943 [Thread-6] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+

@@ -105,7 +105,7 @@ public class PolarAngleComparator implements Comparator<Point>
 	 *               is less than that of p2. 
 	 *            1  otherwise. 
 	 */
-    private  int comparePolarAngle(Point p1, Point p2) 
+    public int comparePolarAngle(Point p1, Point p2) 
     {
     	int r = crossProduct(p1, p2);
     	
@@ -134,7 +134,7 @@ public class PolarAngleComparator implements Comparator<Point>
      * 			 -1   if p1 is closer to referencePoint 
      *            1   otherwise (i.e., if p2 is closer to referencePoint)
      */
-    private int compareDistance(Point p1, Point p2)
+    public int compareDistance(Point p1, Point p2)
     {
     	int p1d = dotProduct(p1, p1);
     	int p2d = dotProduct(p2, p2);

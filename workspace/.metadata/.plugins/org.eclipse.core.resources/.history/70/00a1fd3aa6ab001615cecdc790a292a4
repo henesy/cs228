@@ -4,11 +4,8 @@ package edu.iastate.cs228.hw4;
  * @author Sean Hinchee
  */
 
-import java.io.FileNotFoundException;
+import java.io.FileNotFoundException; 
 import java.util.InputMismatchException;
-
-import edu.iastate.cs228.hw2.Point;
-
 import java.util.ArrayList;
 import java.util.Comparator; 
 
@@ -35,19 +32,18 @@ public class JarvisMarch extends ConvexHull
 	public JarvisMarch(Point[] pts) throws IllegalArgumentException 
 	{
 		super(pts); 
-		// TODO 
 		super.algorithm = "jarvis";
-		leftChain = new ArrayBasedStack<>();
-		rightChain = new ArrayBasedStack<>();
-		
+		leftChain = new ArrayBasedStack<Point>();
+		rightChain = new ArrayBasedStack<Point>();
+				
 		//highest point
 		Point lp = new Point();
 		int i;
-		for(i = 0; i < pts.length; i++) {
+		for(i = 0; i < super.pointsNoDuplicate.length; i++) {
 			if(i == 0) {
-				lp = pts[i];
-			} else if(lp.compareTo(pts[i]) < 0) {
-				lp = pts[i];
+				lp = super.pointsNoDuplicate[i];
+			} else if(lp.compareTo(super.pointsNoDuplicate[i]) < 0) {
+				lp = super.pointsNoDuplicate[i];
 			}
 		}
 		highestPoint = lp;
@@ -65,13 +61,21 @@ public class JarvisMarch extends ConvexHull
 	public JarvisMarch(String inputFileName) throws FileNotFoundException, InputMismatchException
 	{
 		super(inputFileName); 
-		// TODO 
 		super.algorithm = "jarvis";
-		leftChain = new ArrayBasedStack<>();
-		rightChain = new ArrayBasedStack<>();
+		leftChain = new ArrayBasedStack<Point>();
+		rightChain = new ArrayBasedStack<Point>();
 		
 		//highest point
-		
+		Point lp = new Point();
+		int i;
+		for(i = 0; i < super.pointsNoDuplicate.length; i++) {
+			if(i == 0) {
+				lp = super.pointsNoDuplicate[i];
+			} else if(lp.compareTo(super.pointsNoDuplicate[i]) < 0) {
+				lp = super.pointsNoDuplicate[i];
+			}
+		}
+		highestPoint = lp;
 	}
 
 
@@ -93,11 +97,40 @@ public class JarvisMarch extends ConvexHull
 	 */
 	public void constructHull()
 	{
-		// TODO
-		createRightChain();
-		createLeftChain();
+		time = System.nanoTime();
 		
-		//merge? not sure best way 
+		if(pointsNoDuplicate.length == 1) {
+			hullVertices = new Point[1];
+			hullVertices[0] = pointsNoDuplicate[0];
+		} else if(pointsNoDuplicate.length == 2) {
+			hullVertices = new Point[1];
+			hullVertices[0] = pointsNoDuplicate[0];
+			hullVertices[1] = pointsNoDuplicate[1];
+		} else {
+			
+			//////system.out.println("Before infinite loop here!");
+			//infinite loop in here somewhere
+
+			createRightChain();
+			//////system.out.println("After right chain!");
+			createLeftChain();
+						
+			hullVertices = new Point[ leftChain.size() + rightChain.size()];
+			
+			//merge left half then right half
+			int i;
+			for(i = 0; i < hullVertices.length; i++) {
+				Point tmp;
+				if(leftChain.size() > 0)
+					tmp = leftChain.pop();
+				else
+					tmp = rightChain.pop();
+				hullVertices[i] = tmp;
+			}
+			
+		}
+		time = System.nanoTime() - time;
+		
 		
 	}
 	
@@ -114,8 +147,18 @@ public class JarvisMarch extends ConvexHull
 	 */
 	public void createRightChain()
 	{
-		// TODO 
-		
+		//////system.out.println(highestPoint.toString() + " " + lowestPoint.toString());
+		Point tmp = lowestPoint;
+		Point tmpLast = new Point();
+		rightChain.push(tmp);
+		while(tmp.compareTo(highestPoint) != 0) {
+			tmp = nextVertex(tmp);
+			if(tmp.compareTo(tmpLast) == 0)
+				break;
+			//////system.out.println(tmp.toString());
+			rightChain.push(tmp);
+			tmpLast = tmp;
+		}
 	}
 	
 	
@@ -129,8 +172,17 @@ public class JarvisMarch extends ConvexHull
 	 */
 	public void createLeftChain()
 	{
-		// TODO 
-		
+		Point tmp = highestPoint;
+		Point tmpLast = new Point();
+		leftChain.push(tmp);
+		while(tmp.compareTo(lowestPoint) != 0) {
+			tmp = nextVertex(tmp);
+			if(tmp.compareTo(tmpLast) == 0)
+				break;
+			//////system.out.println(tmp.toString());
+			leftChain.push(tmp);
+			tmpLast = tmp;
+		}
 	}
 	
 	
@@ -147,13 +199,20 @@ public class JarvisMarch extends ConvexHull
 	 */
 	public Point nextVertex(Point v)
 	{
-		Comparator<Point> comp = new PolarAngleComparator(v, false);
+		PolarAngleComparator comp = new PolarAngleComparator(v, false);
+		
+		Point lp = super.pointsNoDuplicate[0];
 		
 		int i;
-		for(i = 0; i < super.pointsNoDuplicate.length; i++) {
-			
+		for(i = 1; i < super.pointsNoDuplicate.length; i++) {
+			if(comp.compare(super.pointsNoDuplicate[i], lp) < 0 && super.pointsNoDuplicate[i].compareTo(v) != 0) {
+				lp = super.pointsNoDuplicate[i];
+			} else if(comp.compare(super.pointsNoDuplicate[i], lp) == 0 && super.pointsNoDuplicate[i].compareTo(v) != 0) {
+				if(comp.compareDistance(super.pointsNoDuplicate[i], lp) > 0)
+					lp = super.pointsNoDuplicate[i];
+			}
 		}
 		
-		return null; 
+		return lp; 
 	}
 }

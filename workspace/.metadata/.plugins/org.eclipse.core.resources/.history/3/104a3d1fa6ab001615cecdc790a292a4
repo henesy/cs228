@@ -105,7 +105,7 @@ public class PolarAngleComparator implements Comparator<Point>
 	 *               is less than that of p2. 
 	 *            1  otherwise. 
 	 */
-    private  int comparePolarAngle(Point p1, Point p2) 
+    public int comparePolarAngle(Point p1, Point p2) 
     {
     	int r = crossProduct(p1, p2);
     	
