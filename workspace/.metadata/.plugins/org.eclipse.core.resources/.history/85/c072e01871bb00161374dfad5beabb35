@@ -1,0 +1,472 @@
+package edu.iastate.cs228.hw5;
+
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * @author Sean Hinchee
+ */
+public class ABTreeSet<E extends Comparable<? super E>> extends AbstractSet<E> {
+
+	final class ABTreeIterator implements Iterator<E> {
+		// TODO add private fields here
+		BSTNode<E> cursor;
+		BSTNode<E> previous;
+
+		ABTreeIterator() {
+			// TODO
+			cursor = root;
+			previous = cursor;
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO
+			if(successor(cursor) != null)
+				return true;
+						
+			return false;
+		}
+
+		@Override
+		public E next() {
+			// TODO
+			previous = cursor;
+			cursor = successor(cursor);
+			return cursor.data();
+		}
+
+		@Override
+		public void remove() {
+			// TODO
+			//same as tree remove, but doesn't search for a given node
+			
+			
+		}
+	}
+	/* end iterator class */
+	
+
+	final class Node implements BSTNode<E> {
+		private int count;
+		private E data;
+
+		// TODO add private fields here
+		private Node parent;
+		private Node left;
+		private Node right;
+
+		Node(E data) {
+			// TODO
+			count = 0;
+			this.data = data;
+		}
+
+		/**
+		 * determine which,  if any,  nodes have become unbalanced as a result of an update,
+		 * and is used to find the root of the subtree at which the re-balance operation must be applied
+		 */
+		@Override
+		public int count() {
+			//do math under the node in the tree
+			
+			
+			return count;
+		}
+
+		@Override
+		public E data() {
+			// TODO
+
+			return data;
+		}
+
+		@Override
+		public BSTNode<E> left() {
+			// TODO
+
+			return left;
+		}
+
+		@Override
+		public BSTNode<E> parent() {
+			// TODO
+
+			return parent;
+		}
+
+		@Override
+		public BSTNode<E> right() {
+			// TODO
+
+			return right;
+		}
+
+		@Override
+		public String toString() {
+			return data.toString();
+		}
+	}
+	/* end Node class */
+	
+
+	// TODO add private fields here
+	private Node root;
+	private boolean balancing;
+	private int alphaTop;
+	private int alphaBot;
+
+	/**
+	 * Default constructor. Builds a non-self-balancing tree.
+	 */
+	public ABTreeSet() {
+		// TODO
+		balancing = false;
+		root = null;
+		alphaTop = 0;
+		alphaBot = 0;
+
+	}
+
+	/**
+	 * If <code>isSelfBalancing</code> is <code>true</code> <br>
+	 * builds a self-balancing tree with the default value alpha = 2/3.
+	 * <p>
+	 * If <code>isSelfBalancing</code> is <code>false</code> <br>
+	 * builds a non-self-balancing tree.
+	 * 
+	 * @param isSelfBalancing
+	 */
+	public ABTreeSet(boolean isSelfBalancing) {
+		// TODO
+		
+		balancing = isSelfBalancing;
+		//alpha is 2/3
+		if(balancing) {
+			alphaTop = 2;
+			alphaBot = 3;
+		} else {
+			alphaTop = 0;
+			alphaBot = 0;
+		}
+		
+		root = null;
+
+	}
+
+	/**
+	 * If <code>isSelfBalancing</code> is <code>true</code> <br>
+	 * builds a self-balancing tree with alpha = top / bottom.
+	 * <p>
+	 * If <code>isSelfBalancing</code> is <code>false</code> <br>
+	 * builds a non-self-balancing tree (top and bottom are ignored).
+	 * 
+	 * @param isSelfBalancing
+	 * @param top
+	 * @param bottom
+	 * @throws IllegalArgumentException
+	 *             if (1/2 < alpha < 1) is false
+	 */
+	public ABTreeSet(boolean isSelfBalancing, int top, int bottom) {
+		// TODO
+
+		balancing = isSelfBalancing;
+		//alpha is 2/3
+		
+		if((1/2 < top / bottom && top/bottom < 1) == false)
+			throw new IllegalArgumentException();
+		
+		if(balancing) {
+			alphaTop = top;
+			alphaBot = bottom;
+		} else {
+			alphaTop = 0;
+			alphaBot = 0;
+		}
+		
+		root = null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws NullPointerException
+	 *             if e is null.
+	 */
+	@Override
+	public boolean add(E e) {
+		// TODO
+		
+		if(e == null)
+			throw new NullPointerException();
+		
+		if(root != null) {
+			
+			Node cursor = root;
+			while(true) {
+				if(e.compareTo(cursor.data) <= 0) {
+					if(cursor.left != null) {
+						//go left
+						cursor = cursor.left;
+					} else {
+						cursor.left = new Node(e);
+						cursor.left.parent = cursor;
+						return true;
+					}
+					
+				} else {
+					if(cursor.right != null) {
+						//go right
+						cursor = cursor.right;
+					} else {
+						cursor.right = new Node(e);
+						cursor.right.parent = cursor;
+						return true;
+					}
+				}
+					
+			}
+			
+		} else {
+			root = new Node(e);
+			root.parent = null;
+			return true;
+		}
+
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		// TODO
+		//search tree for match of object
+		boolean res = walkContains(root, o);
+		return res;
+	}
+
+	/**
+	 * @param e
+	 * @return BSTNode that contains e, null if e does not exist
+	 */
+	public BSTNode<E> getBSTNode(E e) {
+		// TODO
+		//search tree for match of object's data
+		BSTNode<E> node = walkFind(root, e);
+
+		return node;
+	}
+
+	/**
+	 * Returns an in-order list of all nodes in the given sub-tree.
+	 * 
+	 * @param root
+	 * @return an in-order list of all nodes in the given sub-tree.
+	 */
+	public List<BSTNode<E>> inorderList(BSTNode<E> root) {
+		// TODO
+		//walk entire list
+		List<BSTNode<E>> list = new ArrayList<BSTNode<E>>();
+		
+		inorderWalk(root, list);
+
+		return list;
+	}
+	
+	private void inorderWalk(BSTNode<E> top, List<BSTNode<E>> list) {
+		if(top == null)
+			return;
+		
+		inorderWalk(top.left(), list);
+		list.add(top);
+		inorderWalk(top.right(), list);
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO
+
+		return new ABTreeIterator();
+	}
+
+	/**
+	 * Returns an pre-order list of all nodes in the given sub-tree.
+	 * 
+	 * @param root
+	 * @return an pre-order list of all nodes in the given sub-tree.
+	 */
+	public List<BSTNode<E>> preorderList(BSTNode<E> root) {
+		// TODO
+		//walk entire list
+		List<BSTNode<E>> list = new ArrayList<BSTNode<E>>();
+		
+		preorderWalk(root, list);
+
+		return list;
+	}
+			
+	private void preorderWalk(BSTNode<E> top, List<BSTNode<E>> list) {
+		if(top == null)
+			return;
+		
+		list.add(top);
+		inorderWalk(top.left(), list);
+		inorderWalk(top.right(), list);
+	}
+
+	/**
+	 * Performs a re-balance operation on the subtree rooted at the given node.
+	 * 
+	 * @param bstNode
+	 */
+	public void rebalance(BSTNode<E> bstNode) {
+		// TODO
+		//MISSING
+
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		// TODO
+		//search tree for object then un-pin object
+		BSTNode<E> node = getBSTNode((E) o);
+		if(node == null)
+			return false;
+		
+		if(node.left() == null && node.right() == null)
+			node = null;
+		else if(node.left() == null && node.right() != null)
+			node = node.right();
+		else if(node.left() != null && node.right() == null)
+			node = node.left();
+		else if(node.left() != null && node.right() != null) {
+			//complicated, pages 16-17 of PDF
+			//MISSING
+			
+		}
+		
+		return true;
+	}
+
+	/**
+	 * Returns the root of the tree.
+	 * 
+	 * @return the root of the tree.
+	 */
+	public BSTNode<E> root() {
+		// TODO
+
+		return root;
+	}
+
+	public void setSelfBalance(boolean isSelfBalance) {
+		// TODO
+
+		balancing = isSelfBalance;
+	}
+
+	@Override
+	public int size() {
+		// TODO
+		//walk through entire tree (probably)
+		
+		if(root == null)
+			return 0;
+		
+		int size = walkCount(root);
+		return size;
+	}
+
+	public BSTNode<E> successor(BSTNode<E> node) {
+		// TODO
+		
+		BSTNode<E> cursor = node;
+		
+		//go right first if we can
+		if(node.right() != null) {
+			cursor = cursor.right();
+			while(cursor.left() != null)
+				cursor = cursor.left();
+			return cursor;
+		}
+		
+		//do the go up to root of subtree
+		BSTNode<E> last = node;
+		cursor = cursor.parent();
+		if(cursor == null)
+			return null;
+		
+		while(cursor.left() != last) {
+			last = cursor;
+			cursor = cursor.parent();
+			if(cursor == null)
+				return null;
+		}
+		
+		return cursor;
+	}
+
+	@Override
+	public String toString() {
+		// TODO
+		ArrayList<BSTNode<E>> list = new ArrayList<BSTNode<E>>();
+		ArrayList<BSTNode<Integer>> dists = new ArrayList<BSTNode<Integer>>();
+		int dist = 0;
+		preorderWalkTrack(list, dists, dist);
+
+		return null;
+	}
+	
+	private void preorderWalkTrack(BSTNode<E> top, List<BSTNode<Integer>> list , List<Integer> dists, int dist) {
+		dist++;
+		if(top == null) {
+			dist--;
+			return;
+		}
+		
+		list.add(top);
+		dists.add(dist);
+		inorderWalk(top.left(), list);
+		inorderWalk(top.right(), list);
+	}
+	
+	/***
+	 * Walks through the nodes of a tree
+	 * @param top
+	 */
+	private int walkCount(Node top) {
+		int cnt = 1;
+		if(top.left != null)
+			cnt += walkCount(top.left);
+		if(top.right != null)
+			cnt += walkCount(top.right);
+		return cnt;
+	}
+	
+	private boolean walkContains(Node top, Object target) {
+		
+		if(top.data.equals(target))
+			return true;
+
+		if(top.left != null)
+			walkContains(top.left, target);
+		if(top.right != null)
+			walkContains(top.right, target);
+		
+		return false;
+	}
+	
+	private BSTNode<E> walkFind(Node top, E e) {
+		// TODO Auto-generated method stub
+		if(top.data.equals(e))
+			return top;
+		
+		if(top.left != null)
+			walkContains(top.left, e);
+		if(top.right != null)
+			walkContains(top.right, e);
+		
+		return null;
+	}
+
+}

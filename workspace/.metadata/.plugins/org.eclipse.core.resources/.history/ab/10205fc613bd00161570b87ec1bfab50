@@ -1,0 +1,79 @@
+package edu.iastate.cs228.hw5;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ABTreeSetTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ABTreeSet<Integer> tree = new ABTreeSet<Integer>();
+		System.out.println(tree.size());
+		tree.add(5);
+		System.out.println(tree.size());
+		tree.add(3);
+		System.out.println(tree.size());
+		System.out.println(tree.contains(5));
+		System.out.println(tree.contains(2));
+		BSTNode<Integer> n0 = tree.getBSTNode(5);
+		System.out.println(n0.toString());
+		BSTNode<Integer> n1 = tree.getBSTNode(1);
+		if(n1 != null)
+			System.out.println(n1.toString());
+		else
+			System.out.println("n1 is null!");
+		
+		ArrayList<BSTNode<Integer>> list = (ArrayList<BSTNode<Integer>>) tree.inorderList(tree.root());
+		System.out.println(list.size());
+		System.out.println(list.toString());
+		
+		ABTreeSet<Integer> tree2 = new ABTreeSet<Integer>();
+		tree2.add(40);
+		tree2.add(25);
+		tree2.add(78);
+		tree2.add(10);
+		tree2.add(32);
+		ArrayList<BSTNode<Integer>> list2 = (ArrayList<BSTNode<Integer>>) tree2.inorderList(tree2.root());
+		System.out.println(list2.size());
+		System.out.println(list2.toString());
+		
+		ArrayList<BSTNode<Integer>> list3 = (ArrayList<BSTNode<Integer>>) tree2.preorderList(tree2.root());
+		System.out.println(list3.size());
+		System.out.println(list3.toString());
+		
+		tree2.toString();
+		System.out.println("Node with 78: " + tree2.getBSTNode(78));
+		System.out.println("Removal: " + tree2.remove(78));
+		tree2.toString();
+		System.out.println("Removal: " + tree2.remove(25));
+		tree2.toString();
+		System.out.println("Removal: " + tree2.remove(32));
+		tree2.toString();
+		//works now
+		System.out.println("Removal: " + tree2.remove(10));
+		tree2.toString();
+		
+		tree.toString();
+		tree.add(4);
+		tree.toString();
+		tree.add(2);
+		tree.toString();
+		tree.getBSTNode(5).count();
+		tree.toString();
+		System.out.println(tree.getBSTNode(5).count());
+		System.out.println(tree.getBSTNode(3).count());
+		System.out.println(tree.getBSTNode(2).count());
+		tree.remove(4);
+		tree.remove(3);
+		tree.remove(2);
+		tree.toString();
+		System.out.println(tree.contains(5));
+
+		//junit try this out
+		ABTreeSet<Integer> set = new ABTreeSet<>();
+		set.add(955);
+		System.out.println(set.contains(955));
+
+	}
+
+}

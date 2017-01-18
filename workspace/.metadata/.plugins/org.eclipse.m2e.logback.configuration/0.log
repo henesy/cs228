@@ -178,3 +178,20 @@ Caused by: org.eclipse.aether.transfer.ArtifactTransferException: Failure to tra
 2016-11-15 20:18:21,171 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2016-11-15 20:18:21,943 [Thread-6] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
 
+2016-11-28 15:14:52,855 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-11-28 15:14:54,909 [Thread-7] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-30 18:19:36,775 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-11-30 18:19:38,089 [Thread-7] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-30 20:39:12,078 [Thread-4] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-11-30 20:39:30,439 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-12-01 19:39:51,214 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-12-01 19:39:52,055 [Thread-7] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-12-03 11:02:07,145 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-12-03 21:55:01,542 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-12-07 23:37:29,205 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2016-12-07 23:37:30,351 [Thread-8] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+

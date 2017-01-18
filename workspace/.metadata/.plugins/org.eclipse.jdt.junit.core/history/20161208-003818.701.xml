@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ABTreeTest" project="Hw5" tests="12" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true">
+    <testcase name="test_size" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_add" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_get" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_put" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_keySet" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_remove" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_rebalance" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_values" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_containsKey" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_successor" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_toString" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+    <testcase name="test_count" classname="edu.iastate.cs228.hw5.ABTreeTest" incomplete="true"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,357 @@
+package edu.iastate.cs228.hw5;
+
+import java.util.AbstractSet;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * @author Sean Hinchee
+ */
+public class ABTreeSet<E extends Comparable<? super E>> extends AbstractSet<E> {
+
+	final class ABTreeIterator implements Iterator<E> {
+		// TODO add private fields here
+
+		ABTreeIterator() {
+			// TODO
+
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO
+
+			return false;
+		}
+
+		@Override
+		public E next() {
+			// TODO
+
+			return null;
+		}
+
+		@Override
+		public void remove() {
+			// TODO
+
+		}
+	}
+	/* end iterator class */
+	
+
+	final class Node implements BSTNode<E> {
+		private int count;
+		private E data;
+
+		// TODO add private fields here
+		private Node parent;
+		private Node left;
+		private Node right;
+
+		Node(E data) {
+			// TODO
+			count = 0;
+			this.data = data;
+		}
+
+		/**
+		 * determine which,  if any,  nodes have become unbalanced as a result of an update,
+		 * and is used to find the root of the subtree at which the re-balance operation must be applied
+		 */
+		@Override
+		public int count() {
+			//do math
+			
+			return count;
+		}
+
+		@Override
+		public E data() {
+			// TODO
+
+			return data;
+		}
+
+		@Override
+		public BSTNode<E> left() {
+			// TODO
+
+			return left;
+		}
+
+		@Override
+		public BSTNode<E> parent() {
+			// TODO
+
+			return parent;
+		}
+
+		@Override
+		public BSTNode<E> right() {
+			// TODO
+
+			return right;
+		}
+
+		@Override
+		public String toString() {
+			return data.toString();
+		}
+	}
+	/* end Node class */
+	
+
+	// TODO add private fields here
+	private Node root;
+	private boolean balancing;
+	private int alphaTop;
+	private int alphaBot;
+
+	/**
+	 * Default constructor. Builds a non-self-balancing tree.
+	 */
+	public ABTreeSet() {
+		// TODO
+		balancing = false;
+		root = null;
+		alphaTop = 0;
+		alphaBot = 0;
+
+	}
+
+	/**
+	 * If <code>isSelfBalancing</code> is <code>true</code> <br>
+	 * builds a self-balancing tree with the default value alpha = 2/3.
+	 * <p>
+	 * If <code>isSelfBalancing</code> is <code>false</code> <br>
+	 * builds a non-self-balancing tree.
+	 * 
+	 * @param isSelfBalancing
+	 */
+	public ABTreeSet(boolean isSelfBalancing) {
+		// TODO
+		
+		balancing = isSelfBalancing;
+		//alpha is 2/3
+		if(balancing) {
+			alphaTop = 2;
+			alphaBot = 3;
+		} else {
+			alphaTop = 0;
+			alphaBot = 0;
+		}
+		
+		root = null;
+
+	}
+
+	/**
+	 * If <code>isSelfBalancing</code> is <code>true</code> <br>
+	 * builds a self-balancing tree with alpha = top / bottom.
+	 * <p>
+	 * If <code>isSelfBalancing</code> is <code>false</code> <br>
+	 * builds a non-self-balancing tree (top and bottom are ignored).
+	 * 
+	 * @param isSelfBalancing
+	 * @param top
+	 * @param bottom
+	 * @throws IllegalArgumentException
+	 *             if (1/2 < alpha < 1) is false
+	 */
+	public ABTreeSet(boolean isSelfBalancing, int top, int bottom) {
+		// TODO
+
+		balancing = isSelfBalancing;
+		//alpha is 2/3
+		
+		if((1/2 < top / bottom && top/bottom < 1) == false)
+			throw new IllegalArgumentException();
+		
+		if(balancing) {
+			alphaTop = top;
+			alphaBot = bottom;
+		} else {
+			alphaTop = 0;
+			alphaBot = 0;
+		}
+		
+		root = null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @throws NullPointerException
+	 *             if e is null.
+	 */
+	@Override
+	public boolean add(E e) {
+		// TODO
+		
+		if(e == null)
+			throw new NullPointerException();
+		
+		if(root != null) {
+			
+			Node c = root;
+			Node lastDescent = root;
+			while(true) {
+				if(c.left() == null) {
+					c.left = new Node(e);
+					return true;
+				} else if(c.right() == null) {
+					if(c.right() == null) {
+						c.right = new Node(e);
+						return true;
+					}
+				} else if(c.left() != null && c.right() != null) {
+					//isn't leaf, descend
+					
+				}
+			}
+			
+		} else {
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		// TODO
+		//search tree for match of object
+		boolean res = walkContains(root, o);
+		return res;;
+	}
+
+	/**
+	 * @param e
+	 * @return BSTNode that contains e, null if e does not exist
+	 */
+	public BSTNode<E> getBSTNode(E e) {
+		// TODO
+		//search tree for match of object's data
+
+		return null;
+	}
+
+	/**
+	 * Returns an in-order list of all nodes in the given sub-tree.
+	 * 
+	 * @param root
+	 * @return an in-order list of all nodes in the given sub-tree.
+	 */
+	public List<BSTNode<E>> inorderList(BSTNode<E> root) {
+		// TODO
+		//walk entire list
+
+		return null;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO
+
+		return null;
+	}
+
+	/**
+	 * Returns an pre-order list of all nodes in the given sub-tree.
+	 * 
+	 * @param root
+	 * @return an pre-order list of all nodes in the given sub-tree.
+	 */
+	public List<BSTNode<E>> preorderList(BSTNode<E> root) {
+		// TODO
+
+		return null;
+	}
+
+	/**
+	 * Performs a re-balance operation on the subtree rooted at the given node.
+	 * 
+	 * @param bstNode
+	 */
+	public void rebalance(BSTNode<E> bstNode) {
+		// TODO
+
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		// TODO
+		//search tree for object then un-pin object
+		
+		return false;
+	}
+
+	/**
+	 * Returns the root of the tree.
+	 * 
+	 * @return the root of the tree.
+	 */
+	public BSTNode<E> root() {
+		// TODO
+
+		return root;
+	}
+
+	public void setSelfBalance(boolean isSelfBalance) {
+		// TODO
+
+	}
+
+	@Override
+	public int size() {
+		// TODO
+		//walk through entire tree (probably)
+		
+		if(root == null)
+			return 0;
+		
+		int size = walkCount(root);
+		return size;
+	}
+
+	public BSTNode<E> successor(BSTNode<E> node) {
+		// TODO
+
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		// TODO
+
+		return null;
+	}
+	
+	/***
+	 * Walks through the nodes of a tree
+	 * @param top
+	 */
+	private int walkCount(Node top) {
+		int cnt = 1;
+		if(top.left != null)
+			cnt += walkCount(top.left);
+		if(top.right != null)
+			cnt += walkCount(top.right);
+		return cnt;
+	}
+	
+	private boolean walkContains(Node top, Object target) {
+		boolean a = false;
+		
+		if(top.data.equals(target))
+			return true;
+
+		if(top.left != null)
+			walkContains(top, target);
+		if(top.right != null)
+			walkContains(top, target);
+		
+		return false;
+	}
+
+}

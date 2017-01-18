@@ -1,0 +1,12 @@
+package edu.iastate.cs228.hw5;
+
+public class ABTreeSetTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ABTreeSet<Integer> tree = new ABTreeSet<Integer>();
+		System.out.println(tree.size());
+		tree.add(5);
+	}
+
+}

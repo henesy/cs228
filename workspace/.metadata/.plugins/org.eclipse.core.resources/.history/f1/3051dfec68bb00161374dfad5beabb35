@@ -1,0 +1,27 @@
+package edu.iastate.cs228.hw5;
+
+public class ABTreeSetTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ABTreeSet<Integer> tree = new ABTreeSet<Integer>();
+		System.out.println(tree.size());
+		tree.add(5);
+		System.out.println(tree.size());
+		tree.add(3);
+		System.out.println(tree.size());
+		System.out.println(tree.contains(5));
+		System.out.println(tree.contains(2));
+		BSTNode<Integer> n0 = tree.getBSTNode(5);
+		System.out.println(n0.toString());
+		BSTNode<Integer> n1 = tree.getBSTNode(1);
+		if(n1 != null)
+			System.out.println(n1.toString());
+		else
+			System.out.println("n1 is null!");
+		
+		tree.inorderList(tree.root());
+		
+	}
+
+}
